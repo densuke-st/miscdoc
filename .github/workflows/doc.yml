@@ -19,7 +19,7 @@ jobs:
       - name: gh-pages
         run: |
           git checkout -b gh-pages
-          mv -v /tmp/docs/build/* .
+          cp -r /tmp/docs/build/* .
           [ ! -f /.nojekyll ] && touch /.nojekyll
           git add .
           git commit -m "auto commit"
