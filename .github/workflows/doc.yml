@@ -23,7 +23,7 @@ jobs:
           git checkout gh-pages
           cp -r /tmp/docs/build/* .
           [ ! -f .nojekyll ] && touch .nojekyll
-          cp -u /tmp/ndex-redirect.html .
+          cp -u /tmp/index-redirect.html .
           git add .
           git config --global user.email "densuke@st.kobedenshi.ac.jp"
           git config --global user.name "SATO Daisuke(Auto commit)"
