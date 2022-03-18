@@ -18,7 +18,7 @@ jobs:
           docker run --rm -v /tmp/docs:/work densuke/sphinx make clean html
       - name: gh-pages
         run: |
-          git checkout gh-pages
+          git checkout -b gh-pages
           mv -v /tmp/docs/build/* .
           [ ! -f /.nojekyll ] && touch /.nojekyll
           git add .
