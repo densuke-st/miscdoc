@@ -8,17 +8,21 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    container:
-      image: densuke/sphinx
-      volumes:
-        - docs:/work
     steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'main'
       - name: build
         run: |
-          cd /work
-          pwd
-          ls -a
-          make clean
-          make html
+          cp -r docs /tmp/
+          docker run --rm -v /tmp/docs:/work densuke/sphinx make clean html
+      - name: gh-pages
+        run:
+          git checkout gh-pages
+          mv -v /tmp/docs/build/* .
+          [ ! -f /.nojekyll ] && touch /.nojekyll
+          git add .
+          git commit -m "auto commit"
+          git push -u origin gh-pages
 
 
