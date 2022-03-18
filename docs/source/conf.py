@@ -20,7 +20,7 @@
 project = '技術的小噺'
 copyright = '2022, SATO Daisuke <densuke@st.kobedenshi.ac.jp>'
 author = 'SATO Daisuke <densuke@st.kobedenshi.ac.jp>'
-
+root_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
 
@@ -57,3 +57,51 @@ html_theme = 'sphinxdoc'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# -- Options for LaTeX/PDF output
+latex_elements = {
+    # The paper size ('letterpaper' or 'a4paper').
+    #
+    'papersize': 'a4paper',
+
+    # The font size ('10pt', '11pt' or '12pt').
+    #
+    'pointsize': '11pt',
+
+    # Additional stuff for the LaTeX preamble.
+    #
+    # 'preamble': '',
+
+    # Latex figure (float) alignment
+    #
+    'figure_align': 'htbp',
+}
+
+# Grouping the document tree into LaTeX files. List of tuples
+# (source start file, target name, title,
+#  author, documentclass [howto, manual, or own class]).
+latex_documents = [
+    (root_doc, 'miscdoc.tex', project,
+     author, 'manual'),
+]
+
+# The name of an image file (relative to this directory) to place at the top of
+# the title page.
+#
+# latex_logo = None
+
+# If true, show page references after internal links.
+#
+latex_show_pagerefs = True
+
+# If true, show URL addresses after external links.
+#
+latex_show_urls = True
+
+# Documents to append as an appendix to all manuals.
+#
+# latex_appendices = []
+
+# If false, no module index is generated.
+#
+# latex_domain_indices = True
