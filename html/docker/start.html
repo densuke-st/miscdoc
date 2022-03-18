@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Dockerが動いているかのチェック &#8212; 技術的小噺  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="よく使いそうなDockerのコマンド" href="commands.html" />
+    <link rel="prev" title="Docker編" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="commands.html" title="よく使いそうなDockerのコマンド"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Docker編"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Docker編</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Dockerが動いているかのチェック</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="docker">
+<span id="docker-start"></span><h1>Dockerが動いているかのチェック<a class="headerlink" href="#docker" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Dockerが動いているかを見たければ、Dockerコマンドを叩いてみれば良い。</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">Dockerの動作状態チェック</span><a class="headerlink" href="#id2" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">docker</span> <span class="n">info</span>
+</pre></div>
+</div>
+</div>
+<p><strong class="command">info</strong> サブコマンドにより、現状の動作状態を確認できる。
+Dockerのシステムが動いていなければ、接続できない旨が出る。</p>
+<p>うまくいけば、諸々の情報が出力される。</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">接続できたときの出力例(macOS)</span><a class="headerlink" href="#id3" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Client</span><span class="p">:</span>
+ <span class="n">Context</span><span class="p">:</span>    <span class="n">default</span>
+ <span class="n">Debug</span> <span class="n">Mode</span><span class="p">:</span> <span class="n">false</span>
+ <span class="n">Plugins</span><span class="p">:</span>
+  <span class="n">buildx</span><span class="p">:</span> <span class="n">Docker</span> <span class="n">Buildx</span> <span class="p">(</span><span class="n">Docker</span> <span class="n">Inc</span><span class="o">.</span><span class="p">,</span> <span class="n">v0</span><span class="mf">.8.0</span><span class="p">)</span>
+  <span class="n">compose</span><span class="p">:</span> <span class="n">Docker</span> <span class="n">Compose</span> <span class="p">(</span><span class="n">Docker</span> <span class="n">Inc</span><span class="o">.</span><span class="p">,</span> <span class="n">v2</span><span class="mf">.3.3</span><span class="p">)</span>
+  <span class="n">scan</span><span class="p">:</span> <span class="n">Docker</span> <span class="n">Scan</span> <span class="p">(</span><span class="n">Docker</span> <span class="n">Inc</span><span class="o">.</span><span class="p">,</span> <span class="n">v0</span><span class="mf">.17.0</span><span class="p">)</span>
+
+<span class="n">Server</span><span class="p">:</span>
+ <span class="n">Containers</span><span class="p">:</span> <span class="mi">12</span>
+  <span class="n">Running</span><span class="p">:</span> <span class="mi">2</span>
+  <span class="n">Paused</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="n">Stopped</span><span class="p">:</span> <span class="mi">10</span>
+ <span class="n">Images</span><span class="p">:</span> <span class="mi">40</span>
+ <span class="c1"># ↓ Dockerのサーバー側バージョン</span>
+ <span class="n">Server</span> <span class="n">Version</span><span class="p">:</span> <span class="mf">20.10.13</span>
+ <span class="n">Storage</span> <span class="n">Driver</span><span class="p">:</span> <span class="n">overlay2</span>
+  <span class="n">Backing</span> <span class="n">Filesystem</span><span class="p">:</span> <span class="n">extfs</span>
+  <span class="n">Supports</span> <span class="n">d_type</span><span class="p">:</span> <span class="n">true</span>
+  <span class="n">Native</span> <span class="n">Overlay</span> <span class="n">Diff</span><span class="p">:</span> <span class="n">true</span>
+  <span class="n">userxattr</span><span class="p">:</span> <span class="n">false</span>
+ <span class="n">Logging</span> <span class="n">Driver</span><span class="p">:</span> <span class="n">json</span><span class="o">-</span><span class="n">file</span>
+ <span class="n">Cgroup</span> <span class="n">Driver</span><span class="p">:</span> <span class="n">cgroupfs</span>
+ <span class="n">Cgroup</span> <span class="n">Version</span><span class="p">:</span> <span class="mi">2</span>
+ <span class="n">Plugins</span><span class="p">:</span>
+  <span class="n">Volume</span><span class="p">:</span> <span class="n">local</span>
+  <span class="n">Network</span><span class="p">:</span> <span class="n">bridge</span> <span class="n">host</span> <span class="n">ipvlan</span> <span class="n">macvlan</span> <span class="n">null</span> <span class="n">overlay</span>
+  <span class="n">Log</span><span class="p">:</span> <span class="n">awslogs</span> <span class="n">fluentd</span> <span class="n">gcplogs</span> <span class="n">gelf</span> <span class="n">journald</span> <span class="n">json</span><span class="o">-</span><span class="n">file</span> <span class="n">local</span> <span class="n">logentries</span> <span class="n">splunk</span> <span class="n">syslog</span>
+ <span class="n">Swarm</span><span class="p">:</span> <span class="n">inactive</span>
+ <span class="n">Runtimes</span><span class="p">:</span> <span class="n">io</span><span class="o">.</span><span class="n">containerd</span><span class="o">.</span><span class="n">runc</span><span class="o">.</span><span class="n">v2</span> <span class="n">io</span><span class="o">.</span><span class="n">containerd</span><span class="o">.</span><span class="n">runtime</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">linux</span> <span class="n">runc</span>
+ <span class="n">Default</span> <span class="n">Runtime</span><span class="p">:</span> <span class="n">runc</span>
+ <span class="n">Init</span> <span class="n">Binary</span><span class="p">:</span> <span class="n">docker</span><span class="o">-</span><span class="n">init</span>
+ <span class="n">containerd</span> <span class="n">version</span><span class="p">:</span> <span class="mi">2</span><span class="n">a1d4dbdb2a1030dc5b01e96fb110a9d9f150ecc</span>
+ <span class="n">runc</span> <span class="n">version</span><span class="p">:</span> <span class="n">v1</span><span class="mf">.0.3</span><span class="o">-</span><span class="mi">0</span><span class="o">-</span><span class="n">gf46b6ba</span>
+ <span class="n">init</span> <span class="n">version</span><span class="p">:</span> <span class="n">de40ad0</span>
+ <span class="n">Security</span> <span class="n">Options</span><span class="p">:</span>
+  <span class="n">seccomp</span>
+   <span class="n">Profile</span><span class="p">:</span> <span class="n">default</span>
+  <span class="n">cgroupns</span>
+ <span class="c1"># ↓ VM内のLinuxカーネルバージョン</span>
+ <span class="n">Kernel</span> <span class="n">Version</span><span class="p">:</span> <span class="mf">5.10.104</span><span class="o">-</span><span class="n">linuxkit</span>
+ <span class="n">Operating</span> <span class="n">System</span><span class="p">:</span> <span class="n">Docker</span> <span class="n">Desktop</span>
+ <span class="n">OSType</span><span class="p">:</span> <span class="n">linux</span>
+ <span class="n">Architecture</span><span class="p">:</span> <span class="n">x86_64</span>
+ <span class="n">CPUs</span><span class="p">:</span> <span class="mi">4</span>
+ <span class="n">Total</span> <span class="n">Memory</span><span class="p">:</span> <span class="mf">7.774</span><span class="n">GiB</span>
+ <span class="n">Name</span><span class="p">:</span> <span class="n">docker</span><span class="o">-</span><span class="n">desktop</span>
+ <span class="n">ID</span><span class="p">:</span> <span class="n">FXKT</span><span class="p">:</span><span class="n">GAM5</span><span class="p">:</span><span class="n">QM5H</span><span class="p">:</span><span class="n">X5DF</span><span class="p">:</span><span class="n">HC72</span><span class="p">:</span><span class="n">RJSP</span><span class="p">:</span><span class="n">DGSI</span><span class="p">:</span><span class="n">YMBZ</span><span class="p">:</span><span class="n">MIMG</span><span class="p">:</span><span class="n">LUFM</span><span class="p">:</span><span class="mi">6</span><span class="n">N75</span><span class="p">:</span><span class="n">UR76</span>
+ <span class="n">Docker</span> <span class="n">Root</span> <span class="n">Dir</span><span class="p">:</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">docker</span>
+ <span class="n">Debug</span> <span class="n">Mode</span><span class="p">:</span> <span class="n">false</span>
+ <span class="n">HTTP</span> <span class="n">Proxy</span><span class="p">:</span> <span class="n">http</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">internal</span><span class="p">:</span><span class="mi">3128</span>
+ <span class="n">HTTPS</span> <span class="n">Proxy</span><span class="p">:</span> <span class="n">http</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">internal</span><span class="p">:</span><span class="mi">3128</span>
+ <span class="n">No</span> <span class="n">Proxy</span><span class="p">:</span> <span class="n">hubproxy</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">internal</span>
+ <span class="n">Registry</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">index</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">v1</span><span class="o">/</span>
+ <span class="n">Labels</span><span class="p">:</span>
+ <span class="n">Experimental</span><span class="p">:</span> <span class="n">false</span>
+ <span class="n">Insecure</span> <span class="n">Registries</span><span class="p">:</span>
+  <span class="n">hubproxy</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">internal</span><span class="p">:</span><span class="mi">5000</span>
+  <span class="mf">127.0.0.0</span><span class="o">/</span><span class="mi">8</span>
+ <span class="n">Live</span> <span class="n">Restore</span> <span class="n">Enabled</span><span class="p">:</span> <span class="n">false</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h1>実際に走らせて確認する<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Dockerに接続できていることが確認できたら、テスト用のイメージとコンテナを生成すれば良い。
+お約束の <strong>Hello World</strong> が存在するので利用すれば良い。</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">Docker的&quot;Hello World&quot;</span><a class="headerlink" href="#id4" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>% docker run --rm hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the &quot;hello-world&quot; image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+</pre></div>
+</div>
+</div>
+<p>この操作により、以下の点が正常に機能していることが確認できます。</p>
+<ul class="simple">
+<li><p>Dockerのシステムに接続して指示が送れている</p></li>
+<li><p>Docker Hubと接続して <strong>イメージ</strong> を取得できている</p></li>
+<li><p>イメージから <strong>コンテナ</strong> が生成できている</p></li>
+<li><p>コンテナが実行できている</p></li>
+</ul>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Dockerが動いているかのチェック</a></li>
+<li><a class="reference internal" href="#id1">実際に走らせて確認する</a></li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="index.html"
+                          title="前の章へ">Docker編</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="commands.html"
+                          title="次の章へ">よく使いそうなDockerのコマンド</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/docker/start.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="commands.html" title="よく使いそうなDockerのコマンド"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Docker編"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Docker編</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Dockerが動いているかのチェック</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, SATO Daisuke &lt;densuke@st.kobedenshi.ac.jp&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,243 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>よく使いそうなDockerのコマンド &#8212; 技術的小噺  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/translations.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="prev" title="Dockerが動いているかのチェック" href="start.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="start.html" title="Dockerが動いているかのチェック"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Docker編</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">よく使いそうなDockerのコマンド</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="docker">
+<span id="docker-commands"></span><h1>よく使いそうなDockerのコマンド<a class="headerlink" href="#docker" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<section id="run-container-run">
+<span id="run"></span><h2><code class="code docutils literal notranslate"><span class="pre">run</span></code> (<code class="code docutils literal notranslate"><span class="pre">container</span> <span class="pre">run</span></code>)<a class="headerlink" href="#run-container-run" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>イメージからコンテナを生成する</p></li>
+<li><p>特に指示が無ければイメージに埋め込まれているコマンドが実行される</p></li>
+<li><p>コンテナ名は指定が無ければ適当(形容詞_名詞)で生成される</p></li>
+</ul>
+<section id="id1">
+<h3>使い方<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">使い方</span><a class="headerlink" href="#id4" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">docker</span> <span class="n">run</span> <span class="p">[</span><span class="n">run向けオプション</span><span class="o">...</span><span class="p">]</span> <span class="n">イメージ名</span> <span class="p">[</span><span class="n">コンテナ引数</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>イメージは事前にpullしているならそれが使われます。
+ない時はその場でpullを開始、完了してから実行されます。
+命令的には  <strong class="command">docker container run</strong> と行きたいところですが、非常によく使うため短縮命令として(従来から使われていた)  <strong class="command">docker run</strong> がそのまま採用されています。</p>
+</section>
+<section id="id2">
+<h3>run向けオプション<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>きちんと調べたいときはオンラインマニュアルか  <strong class="command">docker run --help</strong> で確認してください。
+ここでは頻出オプションを簡単に記しています。</p>
+<dl class="simple">
+<dt><code class="code docutils literal notranslate"><span class="pre">-i</span></code></dt><dd><p>コンテナのstdinを端末に繋ぎます(対話操作が可能になる)。</p>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">-t</span></code></dt><dd><p>コンテナの出力をダム端末ではなく制御端末に結びつけます(文字色の変更や内部カーソル移動などをサポート)。
+いわゆる端末に接続という意味では、 <code class="code docutils literal notranslate"><span class="pre">-it</span></code> の使い方が多い。</p>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">--rm</span></code></dt><dd><p>コンテナ終了時に自動的に破棄します。</p>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">-v</span> <span class="pre">FROM:TO</span></code></dt><dd><p>ホスト側のディレクトリFROMをコンテナ内のディレクトリTOにマップします。
+これを使ってホスト側のデータをコンテナに送り込むことができますが、コンテナの操作の影響を逆に招き入れる可能性もあるので要注意。
+もし読み出しのみで良いなら <code class="code docutils literal notranslate"><span class="pre">-v</span> <span class="pre">FROM:TO:ro</span></code> とすればコンテナ側での書き込みは抑制できます。</p>
+</dd>
+<dt><code class="code docutils literal notranslate"><span class="pre">-p</span> <span class="pre">FROM:TO</span></code></dt><dd><p>ホスト側のポートFROMをコンテナ内ポートTOにマップします。
+これによりコンテナ側でサーバープロセスを起動し、ホスト側から接続できるようになります。</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">実行例</span><a class="headerlink" href="#id5" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="images-image-ls">
+<span id="ls"></span><h2><code class="code docutils literal notranslate"><span class="pre">images</span></code> (<code class="code docutils literal notranslate"><span class="pre">image</span> <span class="pre">ls</span></code>)<a class="headerlink" href="#images-image-ls" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ローカルにキャッシュされているイメージの一覧を取得します。
+命令的には  <strong class="command">docker image ls</strong> と行きたいところですが、非常によく使うため短縮命令として(従来から使われていた)  <strong class="command">docker images</strong> がそのまま採用されている。</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">実行例</span><a class="headerlink" href="#id6" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">docker</span> <span class="n">images</span>
+<span class="n">REPOSITORY</span>               <span class="n">TAG</span>               <span class="n">IMAGE</span> <span class="n">ID</span>       <span class="n">CREATED</span>          <span class="n">SIZE</span>
+<span class="n">testing</span>                  <span class="n">latest</span>            <span class="mi">96155697</span><span class="n">b768</span>   <span class="mi">42</span> <span class="n">minutes</span> <span class="n">ago</span>   <span class="mf">1.62</span><span class="n">GB</span>
+<span class="n">densuke</span><span class="o">/</span><span class="n">atuq</span>             <span class="n">latest</span>            <span class="n">a39117ef9718</span>   <span class="mi">3</span> <span class="n">weeks</span> <span class="n">ago</span>      <span class="mf">5.59</span><span class="n">MB</span>
+<span class="n">sphinx</span>                   <span class="n">test</span>              <span class="mi">95251</span><span class="n">b96d2bc</span>   <span class="mi">4</span> <span class="n">weeks</span> <span class="n">ago</span>      <span class="mf">1.61</span><span class="n">GB</span>
+<span class="n">densukest</span><span class="o">/</span><span class="n">alpine</span><span class="o">-</span><span class="n">ja</span>      <span class="n">latest</span>            <span class="mi">30</span><span class="n">c5f3e4f257</span>   <span class="mi">4</span> <span class="n">weeks</span> <span class="n">ago</span>      <span class="mf">11.3</span><span class="n">MB</span>
+<span class="o">...</span><span class="p">(</span><span class="n">以下略</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<dl class="simple">
+<dt>REPOSIROTY</dt><dd><p>イメージの名前(レジストリ/名前空間/イメージ名)</p>
+</dd>
+<dt>TAG</dt><dd><p>イメージに付与しているタグ(明示的について無いものはlatest)</p>
+</dd>
+<dt>IMAGE ID</dt><dd><p>内部ID(<code class="code docutils literal notranslate"><span class="pre">--digest</span></code> できちんと出力できるがすごく長い)</p>
+</dd>
+<dt>CREATED</dt><dd><p>そのイメージがいつ頃作成されたか(現在からの距離)</p>
+</dd>
+<dt>SIZE</dt><dd><p>イメージの大きさ</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>イメージは階層構造で生成されており、共用できる階層は共用されます。
+よって、サイズが妙に大きくても、他のイメージと共有している部分は重複して保存されているわけでもありません。</p>
+<p>たとえば ubuntu:focal イメージをベースに作成したイメージAの場合、
+サイズとしては『ubuntu:focalのサイズ+A独自のサイズ』となりますが、
+同様に作った <strong>イメージB</strong> の場合は『ubuntu:focalのサイズ+ <strong>B独自</strong> のサイズ』となります。
+全体での消費量は『ubuntu:focal+A独自+B独自』という計算になります。</p>
+<figure class="align-default" id="id7">
+<a class="reference internal image-reference" href="../_images/size.drawio.png"><img alt="../_images/size.drawio.png" src="../_images/size.drawio.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">イメージは可能なところは共有されている</span><a class="headerlink" href="#id7" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="pull-image-pull">
+<span id="pull"></span><h2><code class="code docutils literal notranslate"><span class="pre">pull</span></code> (<code class="code docutils literal notranslate"><span class="pre">image</span> <span class="pre">pull</span></code>)<a class="headerlink" href="#pull-image-pull" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>指定したイメージを取得します。既に取得済みのイメージの場合、更新されているときに更新された階層のみ再取得を行います。</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">使い方</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">イメージ名</span><span class="p">[:</span><span class="n">タグ</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<dl>
+<dt>イメージ名</dt><dd><p>取得したいイメージの名前</p>
+<ul class="simple">
+<li><p>基本形は『レジストリ名/名前空間/イメージ名』</p></li>
+<li><p>レジストリ名(ホスト名)は省略した場合には <a class="reference external" href="https://hub.docker.com/">Docker Hub</a> の扱い</p></li>
+<li><p>名前空間は一般的には作成したユーザ名となる</p></li>
+</ul>
+<p>Docker HubにおいてはDocker側が事前に認定したものに関しては省略されることがあります <a class="footnote-reference brackets" href="#ubuntu" id="id3">1</a></p>
+</dd>
+<dt>タグ</dt><dd><p>開発側が適当に付けて区別することがあるので、必要なものを選んで渡すこと。
+指定が無い場合は自動的に <code class="code docutils literal notranslate"><span class="pre">latest</span></code> タグが付いているものとして扱われる(最新版)</p>
+</dd>
+</dl>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">実行例</span><a class="headerlink" href="#id9" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Docker Hubよりdensuke/sphinx(:latest)を取得</span>
+<span class="c1"># 実際に存在するイメージですが、1GB越えするので少し時間かかります</span>
+<span class="o">%</span> <span class="n">docker</span> <span class="n">pull</span> <span class="n">densuke</span><span class="o">/</span><span class="n">sphinx</span>
+
+<span class="c1"># 認証済みイメージ centos を取得</span>
+</pre></div>
+</div>
+</div>
+<p class="rubric">脚注</p>
+<dl class="footnote brackets">
+<dt class="label" id="ubuntu"><span class="brackets"><a class="fn-backref" href="#id3">1</a></span></dt>
+<dd><p>Ubuntuのイメージには名前空間指定が無い(<code class="code docutils literal notranslate"><span class="pre">ubuntu:focal</span></code> などでOK)のはこのため</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">よく使いそうなDockerのコマンド</a><ul>
+<li><a class="reference internal" href="#run-container-run"><code class="code docutils literal notranslate"><span class="pre">run</span></code> (<code class="code docutils literal notranslate"><span class="pre">container</span> <span class="pre">run</span></code>)</a><ul>
+<li><a class="reference internal" href="#id1">使い方</a></li>
+<li><a class="reference internal" href="#id2">run向けオプション</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#images-image-ls"><code class="code docutils literal notranslate"><span class="pre">images</span></code> (<code class="code docutils literal notranslate"><span class="pre">image</span> <span class="pre">ls</span></code>)</a></li>
+<li><a class="reference internal" href="#pull-image-pull"><code class="code docutils literal notranslate"><span class="pre">pull</span></code> (<code class="code docutils literal notranslate"><span class="pre">image</span> <span class="pre">pull</span></code>)</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="start.html"
+                          title="前の章へ">Dockerが動いているかのチェック</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/docker/commands.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="start.html" title="Dockerが動いているかのチェック"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Docker編</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">よく使いそうなDockerのコマンド</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, SATO Daisuke &lt;densuke@st.kobedenshi.ac.jp&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+    </div>
+  </body>
+</html>
