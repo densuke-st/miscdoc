@@ -22,6 +22,8 @@ jobs:
           cp -r /tmp/docs/build/* .
           [ ! -f .nojekyll ] && touch .nojekyll
           git add .
+          git config --global user.email "densuke@st.kobedenshi.ac.jp"
+          git config --global user.name "SATO Daisuke(Auto commit)"
           git commit -m "auto commit"
           git push -u origin gh-pages
 
