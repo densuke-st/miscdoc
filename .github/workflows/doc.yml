@@ -5,9 +5,17 @@ on:
       - main
 
 jobs:
+
   build:
-    name: hello
     runs-on: ubuntu-latest
+    container:
+      image: densuke/sphinx
+      volumes:
+        - docs:/work
     steps:
-      - run: echo "Hello, World"
+      - name: build
+        run: |
+          make clean
+          make html
+
 
