@@ -20,7 +20,7 @@ jobs:
         run: |
           git checkout -b gh-pages
           cp -r /tmp/docs/build/* .
-          [ ! -f /.nojekyll ] && touch /.nojekyll
+          [ ! -f .nojekyll ] && touch .nojekyll
           git add .
           git commit -m "auto commit"
           git push -u origin gh-pages
