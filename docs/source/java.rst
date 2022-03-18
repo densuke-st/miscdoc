@@ -1,4 +1,4 @@
-.. java:
+.. _java:
 
 ======================================================
 Javaの開発環境(JDK)
@@ -25,6 +25,9 @@ Java開発キット(JDK; Java Development Kit)は、古はSun MicrosystemsやOra
 - ある意味本家となるOracle版ビルド、無償・有償の扱いで悩むことがありましたがJDK17(JRE17)からは無償でも問題無く利用できるライセンスになりました
 - 少し前までAdoptOpenJDKと言われていたビルドはEclipsAdoptiumというブランドに変更されています
 - MicrosoftもWindows環境やAzure上での動作を念頭に置いたJDKとして"Microsoft build of"版が存在します
+
+ということで、 :ref:`winget` を参照して  :command:`winget` が入っていれば簡単です。
+管理者のPowerShell端末を開いて確認してみましょう。
 
 .. code-block::
     :caption: wingetで検索
