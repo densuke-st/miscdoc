@@ -14,6 +14,7 @@
 
    winget
    java
+   docker/index
 
 
 .. Indices and tables
