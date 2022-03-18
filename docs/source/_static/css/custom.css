@@ -1,0 +1,10 @@
+@import url("theme.css");
+
+span.guilabel {
+    border: dashed 1px;
+}
+
+span.guilabel:before {
+    content: "メニュー項目 ▶";
+    font-size: 60%;
+}
