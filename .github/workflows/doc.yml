@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: build
         run: |
+          cd /work
           pwd
           ls -a
           make clean
