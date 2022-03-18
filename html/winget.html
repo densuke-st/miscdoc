@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>wingetの利用 &#8212; 技術的小噺  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="技術的小噺" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="index.html" title="技術的小噺"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">wingetの利用</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="winget">
+<h1>wingetの利用<a class="headerlink" href="#winget" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<section id="id1">
+<h2>注意<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>PowerShellのプロンプトとして &quot; <code class="code docutils literal notranslate"><span class="pre">PS&gt;</span></code> &quot; を用いています。
+入力しないでください。
+また、コマンドラインサンプル中に含まれる &quot; <code class="code docutils literal notranslate"><span class="pre">#</span></code> &quot; およびそれ以降はコメントです。そのため入力不要です。</p>
+<p>この中で使っているPowerShell(端末)は、管理者モードで利用しています。
+PowerShellを開く際に管理者モードで開くように注意しておいて下さい。</p>
+</section>
+<section id="tl-dr">
+<h2>TL;DR<a class="headerlink" href="#tl-dr" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><p>Windows10以降の公式のパッケージマネージャー</p></li>
+<li><p>今すぐ入れろ</p></li>
+<li><dl class="simple">
+<dt>ストアにて「アプリインストーラー」を探して入れれば良い</dt><dd><ul>
+<li><p>Windows11だと入ってるらしいが更新しないとダメかも</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>wingetって?<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Microsoftが <a class="reference external" href="https://debian.org/">Debian GNU/Linux</a> (と派生物)で使われている <cite>apt</cite> や、 <a class="reference external" href="https://brew.sh/">Homebrew</a> と似た感じで、ソフトウェアの導入や削除をコマンドラインでお手軽に行うツールとして開発されました。</p>
+<p>別にMS謹製のツールだけではなく、サードパーティ製のものでもインストールできたりします。
+開発自体もOSS化されており、github上で見られます。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://winget.run/">winget公式</a></p></li>
+<li><p><a class="reference external" href="https://github.com/microsoft/winget-cli">wingetコマンド</a></p></li>
+<li><dl class="simple">
+<dt><a class="reference external" href="https://github.com/microsoft/winget-pkgs">パッケージリポジトリ</a></dt><dd><ul>
+<li><p>厳密にはこのリポジトリは『インストール・アンインストールの方法』がまとめられているようなものです</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="id6">
+<h2>インストール<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>『アプリインストーラー』という名前でWindows11では標準で入っているようですが、
+Windows11インストール直後では見えないことがあるので、一度更新をかけた方が良い。</p>
+<ol class="arabic simple">
+<li><p>『Microsoftストア』アプリを開く</p></li>
+<li><p><cite>app installer</cite> を検索</p></li>
+<li><p>『アプリインストーラー』が見えればそれを選ぶ、更新が提示されていたら更新すれば良い</p></li>
+</ol>
+<p>インストールできたかの確認については、管理者のプロンプト(PowerShellでも良い)を開けば確認できる。</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">インストール確認</span><a class="headerlink" href="#id14" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">Get</span><span class="o">-</span><span class="n">Command</span> <span class="n">winget</span>
+<span class="c1"># エラーが出ていなければOK</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id7">
+<h2>どうやって使うん?<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>初回使用時や、サードパーティ製アプリケーションの導入時などにライセンスの確認がでることがあります。適宜 <kbd class="kbd docutils literal notranslate">y</kbd> を入力して対応してください。</p>
+<section id="id8">
+<h3>パッケージ検索<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>入れたいものの名前を  <strong class="command">winget search</strong> で検索してみれば概ねわかります。</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">例: Zoomを検索</span><a class="headerlink" href="#id15" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">名前</span>                     <span class="n">ID</span>                                   <span class="n">バージョン</span> <span class="n">一致</span>      <span class="n">ソース</span>
+<span class="o">----------------------------------------------------------------------------------------------</span>
+<span class="n">ZOOM</span> <span class="n">Cloud</span> <span class="n">Meetings</span>      <span class="n">XP99J3KP4XZ4VV</span>                           <span class="n">Unknown</span>              <span class="n">msstore</span>
+<span class="n">Zoom</span> <span class="n">Rooms</span>               <span class="mi">9</span><span class="n">NH8747BW3BC</span>                             <span class="n">Unknown</span>              <span class="n">msstore</span>
+<span class="n">Zoom</span> <span class="n">Player</span>              <span class="n">XP88X30WJ519GR</span>                           <span class="n">Unknown</span>              <span class="n">msstore</span>
+<span class="n">Zoom</span>                     <span class="n">Zoom</span><span class="o">.</span><span class="n">Zoom</span>                                <span class="mf">5.9.3931</span>             <span class="n">winget</span>
+<span class="n">Zoom</span> <span class="n">Outlook</span> <span class="n">Plugin</span>      <span class="n">Zoom</span><span class="o">.</span><span class="n">Zoom</span><span class="o">.</span><span class="n">OutlookPlugin</span>                  <span class="mf">5.9.3</span>      <span class="n">Tag</span><span class="p">:</span> <span class="n">zoom</span> <span class="n">winget</span>
+<span class="n">AeroZoom</span> <span class="n">Beta</span>            <span class="n">wandersick</span><span class="o">.</span><span class="n">AeroZoom</span>                      <span class="mf">4.0</span> <span class="n">beta</span> <span class="mi">2</span> <span class="n">Tag</span><span class="p">:</span> <span class="n">zoom</span> <span class="n">winget</span>
+<span class="n">Virtual</span> <span class="n">Magnifying</span> <span class="n">Glass</span> <span class="n">VirtualMagnifyingGlass</span><span class="o">.</span><span class="n">VirtualMag</span><span class="o">...</span>     <span class="mf">3.6</span>        <span class="n">Tag</span><span class="p">:</span> <span class="n">zoom</span> <span class="n">winget</span>
+</pre></div>
+</div>
+</div>
+<p>インストールに使うのは、 IDの部分です。名前からすれば、Zoomのアプリは &quot;Zoom.Zoom&quot; が適当と思われます。</p>
+<p>なお別の方法として、 <a class="reference external" href="https://winget.run/">winget.run</a> で検索するというのもあります。</p>
+<figure class="align-default" id="id16">
+<a class="reference internal image-reference" href="_images/01-winget-run1.png"><img alt="_images/01-winget-run1.png" src="_images/01-winget-run1.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">winget.runでZoomを検索したときの様子</span><a class="headerlink" href="#id16" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id17">
+<a class="reference internal image-reference" href="_images/01-winget-run2.png"><img alt="_images/01-winget-run2.png" src="_images/01-winget-run2.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">Zoomパッケージの情報</span><a class="headerlink" href="#id17" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id9">
+<h3>インストール<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>インストールは、  <strong class="command">winget install</strong> で行えばOK。</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">Zoomのインストール</span><a class="headerlink" href="#id18" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">winget</span> <span class="n">install</span> <span class="o">-</span><span class="n">h</span> <span class="n">Zoom</span><span class="o">.</span><span class="n">Zoom</span> <span class="c1"># 調べておいたIDを引数に渡す</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>引数に渡している <code class="code docutils literal notranslate"><span class="pre">-h</span></code> はサイレントインストールを促すためのものです。
+問題無ければ『お任せ』の方法でインストールを進めてくれます。</p>
+</div>
+</section>
+<section id="id10">
+<h3>アンインストール<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>同様に  <strong class="command">winget uninstall</strong> で不要となったものは削除できます。</p>
+</section>
+<section id="id11">
+<h3>更新<a class="headerlink" href="#id11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>同様に  <strong class="command">winget upgrade</strong> で更新版が出ているかを確認し、あれば更新を行っていきます。
+ただし、配布元が更新版を出していても、wingetのアプリリポジトリ上で反映されていないと降ってこないこともありますので、急ぐときは配布元からダウンロード・更新をすれば良いでしょう。</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">更新の確認</span><a class="headerlink" href="#id19" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PS&gt; winget upgrade
+名前                                        ID                   バージョン   利用可能     ソース
+--------------------------------------------------------------------------------------------------
+Windows Terminal                    Microsoft.WindowsTerminal     1.11.3471.0  1.12.10393.0 winget
+Evernote                            evernote.evernote             10.32.4      10.33.4      winget
+Microsoft Windows Desktop Runtime  Microsoft.dotnetRuntime.3-x64 3.1.22.30721 3.1.23.31022  winget
+3 アップグレードを利用できます。
+
+PS&gt; winget upgrade --all # 見つけた更新を全て適用
+</pre></div>
+</div>
+</div>
+<figure class="align-default" id="id20">
+<a class="reference internal image-reference" href="_images/01-winget-run3.png"><img alt="_images/01-winget-run3.png" src="_images/01-winget-run3.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">実際の更新の様子</span><a class="headerlink" href="#id20" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id12">
+<h3>インストールされているものの確認<a class="headerlink" href="#id12" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><strong class="command">winget list</strong> で取得できます。</p>
+</section>
+<section id="id13">
+<h3>おまけ<a class="headerlink" href="#id13" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>悪名高きブラウザは、ここから簡単にアンインストールできます。</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">ブラウザの削除</span><a class="headerlink" href="#id21" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">winget</span> <span class="n">uninstall</span> <span class="n">Microsoft</span><span class="o">.</span><span class="n">Edge</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>なお削除の際に結構荒ぶることがあります。赤い×マークのウィンドウを表示しようとすることもありますが、
+適宜ウィンドウを閉じていけばそのうち消えます。</p>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">wingetの利用</a><ul>
+<li><a class="reference internal" href="#id1">注意</a></li>
+<li><a class="reference internal" href="#tl-dr">TL;DR</a></li>
+<li><a class="reference internal" href="#id2">wingetって?</a></li>
+<li><a class="reference internal" href="#id6">インストール</a></li>
+<li><a class="reference internal" href="#id7">どうやって使うん?</a><ul>
+<li><a class="reference internal" href="#id8">パッケージ検索</a></li>
+<li><a class="reference internal" href="#id9">インストール</a></li>
+<li><a class="reference internal" href="#id10">アンインストール</a></li>
+<li><a class="reference internal" href="#id11">更新</a></li>
+<li><a class="reference internal" href="#id12">インストールされているものの確認</a></li>
+<li><a class="reference internal" href="#id13">おまけ</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="index.html"
+                          title="前の章へ">技術的小噺</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/winget.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="index.html" title="技術的小噺"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">wingetの利用</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, SATO Daisuke &lt;densuke@st.kobedenshi.ac.jp&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+    </div>
+  </body>
+</html>
