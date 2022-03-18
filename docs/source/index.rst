@@ -13,6 +13,7 @@
    :caption: 目次:
 
    winget
+   java
 
 
 .. Indices and tables
