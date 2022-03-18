@@ -17,7 +17,7 @@ jobs:
           cp -r docs /tmp/
           docker run --rm -v /tmp/docs:/work densuke/sphinx make clean html
       - name: gh-pages
-        run:
+        run: |
           git checkout gh-pages
           mv -v /tmp/docs/build/* .
           [ ! -f /.nojekyll ] && touch /.nojekyll
