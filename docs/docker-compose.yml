@@ -1,0 +1,16 @@
+version: '2'
+services:
+  html-browse:
+    image: densuke/sphinx
+    ports:
+      - 8888:8000
+    volumes:
+      - .:/work
+    command: |
+      sphinx-autobuild --host 0.0.0.0 --delay 3 source build
+  pdf:
+    image: densuke/sphinx
+    volumes:
+      - .:/work
+    command: |
+      make latexpdfja
