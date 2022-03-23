@@ -14,6 +14,7 @@
 
    winget
    java
+   eclipse
    winterm-ssh
    docker/index
 
