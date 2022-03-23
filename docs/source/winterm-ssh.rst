@@ -4,7 +4,7 @@
 Windows Terminalとsshの利用
 =========================================================
 
-Windows上でLinux(UNIX一般でも)へ繋ぐときの端末は、長らく `TeraTerm <>https://ja.osdn.net/projects/ttssh2/`_ や
+Windows上でLinux(UNIX一般でも)へ繋ぐときの端末は、長らく `TeraTerm <https://ja.osdn.net/projects/ttssh2/>`_ や
 `PuTTY <https://www.chiark.greenend.org.uk/~sgtatham/putty/index.html>`_  、`RLogin <https://github.com/kmiya-culti/RLogin>`_ などがありましたが、
 Microsoft自身が従来のコマンドプロンプトなどで使っていた端末を現代的に作り直した **Windows Terminal** が通常利用ではそれほど困らずに端末としての機能を使えるようになっています。
 ここでは余計なことをせずに使えるので、Windows Terminalを使っての接続を紹介します。
