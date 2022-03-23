@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Windows Terminalとsshの利用 &#8212; 技術的小噺  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Docker編" href="docker/index.html" />
+    <link rel="prev" title="Javaの開発環境(JDK)" href="java.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="docker/index.html" title="Docker編"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="java.html" title="Javaの開発環境(JDK)"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Windows Terminalとsshの利用</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="windows-terminalssh">
+<span id="winterm-ssh"></span><h1>Windows Terminalとsshの利用<a class="headerlink" href="#windows-terminalssh" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Windows上でLinux(UNIX一般でも)へ繋ぐときの端末は、長らく <a href="#id13"><span class="problematic" id="id14">`TeraTerm &lt;&gt;https://ja.osdn.net/projects/ttssh2/`_</span></a> や
+<a class="reference external" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/index.html">PuTTY</a>  、<a class="reference external" href="https://github.com/kmiya-culti/RLogin">RLogin</a> などがありましたが、
+Microsoft自身が従来のコマンドプロンプトなどで使っていた端末を現代的に作り直した <strong>Windows Terminal</strong> が通常利用ではそれほど困らずに端末としての機能を使えるようになっています。
+ここでは余計なことをせずに使えるので、Windows Terminalを使っての接続を紹介します。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>PuTTYはオリジナル版でも概ね使えていますが、日本語への対応度をより上げているバージョンが諸処の事情からか派生版がいっぱい出ています。</p>
+<ul class="simple">
+<li><p>ごった煮版</p></li>
+<li><p>iceiv版</p></li>
+<li><p>ranvis版 その他あるかもしれません</p></li>
+</ul>
+<p>興味ある方はPuTTYと各派生版の名前で検索してみてください</p>
+</div>
+<p>また、sshの部分はMicrosoftがOpenSSHを移植する形でクライアント(<strong class="command">ssh</strong> )は標準で入っているのでこれを使えば余計な準備が不要となります。</p>
+<section id="windows-terminal">
+<h2>Windows Terminalの導入<a class="headerlink" href="#windows-terminal" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<section id="windows11">
+<h3>Windows11<a class="headerlink" href="#windows11" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Windows11では標準でインストールされているので特に対応は不要です。
+せいぜい <a class="reference external" href="https://www.microsoft.com/ja-jp/p/windows-terminal/9n0dx20hk701#activetab=pivot:overviewtab">ストアで更新しておく</a> ぐらいはしてもいいでしょう。</p>
+</section>
+<section id="windows10">
+<h3>Windows10<a class="headerlink" href="#windows10" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Windows10では標準では入っていないため、インストールする必要があります。
+入れ方はいろいろあります。</p>
+<section id="id2">
+<h4>ストアから<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p><a class="reference external" href="https://www.microsoft.com/ja-jp/p/windows-terminal/9n0dx20hk701#activetab=pivot:overviewtab">ストアで表示して</a>  インストールしてください。</p>
+</section>
+<section id="winget">
+<h4>wingetで【おすすめ】<a class="headerlink" href="#winget" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p><a class="reference internal" href="winget.html#winget"><span class="std std-ref">winget</span></a> が入っているなら、管理者のプロンプトを開き、インストールしてみると良いでしょう。</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">wingetでのWindows Terminalインストール例</span><a class="headerlink" href="#id6" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">winget</span> <span class="n">install</span> <span class="o">-</span><span class="n">h</span> <span class="mi">9</span><span class="n">N0DX20HK701</span> <span class="c1"># ストアのIDのためよくわからん16進数列です</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="github">
+<h4>githubから<a class="headerlink" href="#github" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>開発リポジトリがgithub上で公開されています。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/microsoft/terminal">Github: Windows Terminal</a></p></li>
+</ul>
+<p>こちらの <a class="reference external" href="https://github.com/microsoft/terminal/releases">リリース一覧</a> から最新のものを入れれば良いでしょう。
+ただし更新の自動化が行われない可能性もあるので、適宜確認しておくと良いと思います。</p>
+</section>
+</section>
+</section>
+<section id="ssh">
+<h2>sshによる接続<a class="headerlink" href="#ssh" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>端末(Windows Terminal)を起動し、 <strong class="command">ssh</strong> で繋いでみましょう。</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">sshでの接続</span><a class="headerlink" href="#id7" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="n">接続先ホスト名</span>
+</pre></div>
+</div>
+</div>
+<p>ただし、接続時のユーザー名は <strong>Windows側のログインユーザー名</strong> がデフォルトとなってしまうため、違うのであれば明示する必要があります。</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">sshでの接続(ユーザー指定)</span><a class="headerlink" href="#id8" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="n">ユーザー名</span><span class="nd">@接続先ホスト名</span>
+<span class="c1"># ユーザー名を -l オプションで渡すこともできます</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">l</span> <span class="n">ユーザー名</span> <span class="n">接続先ホスト名</span>
+</pre></div>
+</div>
+</div>
+<p>通常sshは22/tcpを利用しますが、学校で配布している仮想マシンへの接続など、ポート番号が異なる時は、ポート番号を <strong class="command">-p PORT</strong> で設定する必要があります。</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">sshでの接続(ユーザー指定、ポート指定)</span><a class="headerlink" href="#id9" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">p</span> <span class="n">ポート番号</span> <span class="n">ユーザー名</span><span class="nd">@接続先ホスト名</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">l</span> <span class="n">ユーザー名</span> <span class="o">-</span><span class="n">p</span> <span class="n">ポート番号</span> <span class="n">接続先ホスト名</span>
+</pre></div>
+</div>
+</div>
+<p>これらを踏まえたとき、学校配布の仮想マシン(VM)に接続するときは以下のコマンドラインとなります。</p>
+<ul class="simple">
+<li><p>接続先はWindowsホスト上のVMのため、自分自身(localhost)</p></li>
+<li><p>接続するユーザーは <code class="code docutils literal notranslate"><span class="pre">linux</span></code></p></li>
+<li><p>接続するポート番号は 2022</p></li>
+</ul>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">sshでの接続例(授業配布VM)</span><a class="headerlink" href="#id10" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">p</span> <span class="mi">2022</span> <span class="n">linux</span><span class="nd">@localhost</span>
+<span class="c1"># もしくは</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">p</span> <span class="mi">2022</span> <span class="o">-</span><span class="n">l</span> <span class="n">linux</span> <span class="n">localhost</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="config">
+<h2><code class="file docutils literal notranslate"><span class="pre">config</span></code> で少し手軽に<a class="headerlink" href="#config" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>sshの接続時コマンドラインは少々複雑になるので、普段使いのものは設定に入れておく方が楽できます。
+そこで、 <code class="file docutils literal notranslate"><span class="pre">~/.ssh/Config</span></code> を準備しておくといいでしょう。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">mkdir</span> <span class="o">~/.</span><span class="n">ssh</span> <span class="c1"># 下の注釈参照</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="o">~/.</span><span class="n">ssh</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">notepad</span> <span class="n">Config</span> <span class="c1">#さしあたりメモ帳でさっと記入</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>何らかの理由で既に用意されていることもあります。その場合は気にせず <strong class="command">cd</strong> してください。</p>
+<p>PS&gt; mkdir ~/.ssh
+mkdir : 指定された名前 C:Usersdensuke.ssh の項目は既に存在します。</p>
+</div>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">~/.ssh/Configの記述例(大文字小文字を区別します)</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="n">ls</span>
+    <span class="n">HostName</span> <span class="n">localhost</span>
+    <span class="n">Port</span> <span class="mi">2022</span>
+    <span class="n">User</span> <span class="n">linux</span>
+    <span class="n">RequestTTY</span> <span class="n">yes</span>
+</pre></div>
+</div>
+</div>
+<p>この例では、短縮名ls(Linux Study)としていますが、適当な名称にしてもOKです(ただし適宜読み替えてください)。</p>
+<dl class="simple">
+<dt>HostName</dt><dd><p>接続先ホスト名</p>
+</dd>
+<dt>Port</dt><dd><p>22/tcp以外の非標準ポートを使うときの番号</p>
+</dd>
+<dt>User</dt><dd><p>接続先のユーザー名</p>
+</dd>
+<dt>RequestTTY</dt><dd><p>端末制御の利用を求める(<strong class="command">vi</strong> などが利用)</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>メモ帳(<strong class="command">notepad</strong>) を使ったとき、新規で生成されるファイル名に暗黙で拡張子 <cite>.txt</cite> を付けられてしまうことがあるので、メモ帳終了後にファイル名を確認しておきましょう。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">notepad</span> <span class="n">Config</span>  <span class="c1"># Configファイルを作成</span>
+<span class="c1"># 以下はメモ帳終了後に</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">ls</span>
+<span class="c1"># ファイル名が &quot;Config.txt&quot; になっていないかチェック、もしなっていたら修正</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">Rename</span><span class="o">-</span><span class="n">Item</span> <span class="n">Config</span><span class="o">.</span><span class="n">txt</span> <span class="n">Config</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">ls</span>
+<span class="c1"># ファイル名の変更をチェック</span>
+</pre></div>
+</div>
+</div>
+<p>以上の設定により、</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="n">ls</span>
+</pre></div>
+</div>
+<p>で接続できるようになります。</p>
+</section>
+<section id="id5">
+<h2>おまけ: プロファイルの追加<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Windows Terminalでは、開くタブ(ウィンドウ)で実行するべきコマンドをプロファイルという形で登録できます。
+<strong class="command">ssh</strong> を使う形で記述する場合、以下の設定をプロファイルとして追加すれば該当プロファイルを開くだけで接続を試みるようになります。</p>
+<dl class="simple">
+<dt>名前</dt><dd><p>お好みで</p>
+</dd>
+<dt>コマンドライン</dt><dd><p><code class="code docutils literal notranslate"><span class="pre">C:\Windows\System32\OpenSSH\ssh.exe</span> <span class="pre">ls</span></code>
+(lsのところは自分で設定した短縮名)</p>
+</dd>
+<dt>開始ディレクトリ</dt><dd><p><code class="code docutils literal notranslate"><span class="pre">%USERPROFILE%</span></code> (たぶん初期値)</p>
+</dd>
+<dt>アイコン</dt><dd><p>適当に設定してください(画面例はPowerShellのものをコピー)</p>
+</dd>
+<dt>タブタイトル名</dt><dd><p>設定不要(してもいいけどどうなるかよくわかりません)</p>
+</dd>
+</dl>
+<figure class="align-center" id="id12">
+<a class="reference internal image-reference" href="_images/winterm-ssh-ls.png"><img alt="_images/winterm-ssh-ls.png" src="_images/winterm-ssh-ls.png" style="width: 337.5px; height: 589.5px;" /></a>
+<figcaption>
+<p><span class="caption-text">プロファイル設定例</span><a class="headerlink" href="#id12" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Windows Terminalとsshの利用</a><ul>
+<li><a class="reference internal" href="#windows-terminal">Windows Terminalの導入</a><ul>
+<li><a class="reference internal" href="#windows11">Windows11</a></li>
+<li><a class="reference internal" href="#windows10">Windows10</a><ul>
+<li><a class="reference internal" href="#id2">ストアから</a></li>
+<li><a class="reference internal" href="#winget">wingetで【おすすめ】</a></li>
+<li><a class="reference internal" href="#github">githubから</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ssh">sshによる接続</a></li>
+<li><a class="reference internal" href="#config"><code class="file docutils literal notranslate"><span class="pre">config</span></code> で少し手軽に</a></li>
+<li><a class="reference internal" href="#id5">おまけ: プロファイルの追加</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="java.html"
+                          title="前の章へ">Javaの開発環境(JDK)</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="docker/index.html"
+                          title="次の章へ">Docker編</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/winterm-ssh.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="docker/index.html" title="Docker編"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="java.html" title="Javaの開発環境(JDK)"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Windows Terminalとsshの利用</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, SATO Daisuke &lt;densuke@st.kobedenshi.ac.jp&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+    </div>
+  </body>
+</html>
