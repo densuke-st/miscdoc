@@ -22,3 +22,4 @@ Docker編
 
    start
    commands
+   run
