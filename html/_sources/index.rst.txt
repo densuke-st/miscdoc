@@ -15,6 +15,7 @@
    jpconfig
    winget
    java
+   eclipse
    winterm-ssh
    virtualbox/index
    docker/index

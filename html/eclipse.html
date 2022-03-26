@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>カスタムEclipseの作成 &#8212; 技術的小噺  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Windows Terminalとsshの利用" href="winterm-ssh.html" />
+    <link rel="prev" title="Javaの開発環境(JDK)" href="java.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="winterm-ssh.html" title="Windows Terminalとsshの利用"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="java.html" title="Javaの開発環境(JDK)"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">カスタムEclipseの作成</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>... _eclipse:</p>
+<section id="eclipse">
+<h1>カスタムEclipseの作成<a class="headerlink" href="#eclipse" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>学校の授業向けにはカスタム版のEclipseが配布される予定です。
+ここではそういうのに頼らずに自分用のEclipseを使うときの小ネタを出しておきます。</p>
+<section id="id1">
+<h2>ベース部分(Eclipse本体)<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Java絡みで使われることの多い <a class="reference external" href="https://www.eclipse.org/">Eclipse</a> ですが、導入自体はそれほど難しくありません。</p>
+<ol class="arabic">
+<li><p><a class="reference external" href="https://www.eclipse.org">Eclipse</a> に行く</p></li>
+<li><p>右上のダウンロード(Downloads)ボタンをクリック</p>
+<blockquote>
+<div><figure class="align-center" id="id10">
+<a class="reference external image-reference" href="https://www.eclipse.org/"><img alt="_images/eclipse-install-01.png" src="_images/eclipse-install-01.png" style="width: 702.0px; height: 465.40000000000003px;" /></a>
+<figcaption>
+<p><span class="caption-text">ダウンロードボタンの場所</span><a class="headerlink" href="#id10" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</div></blockquote>
+</li>
+<li><p>&quot;Get Eclipse IDE 2022‑03&quot; など、最新版のEclipseのダウンロード用ボタンではなく、その下にある <span class="menuselection">Download Packages</span> をクリック</p>
+<blockquote>
+<div><figure class="align-center" id="id11">
+<a class="reference internal image-reference" href="_images/eclipse-install-02.png"><img alt="_images/eclipse-install-02.png" src="_images/eclipse-install-02.png" style="width: 323.7px; height: 281.45px;" /></a>
+<figcaption>
+<p><span class="caption-text">いかにもなボタンは押さない</span><a class="headerlink" href="#id11" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</div></blockquote>
+</li>
+<li><p><span class="menuselection">Eclipse IDE for Java Developers</span>  を選ぶ</p>
+<blockquote>
+<div><figure class="align-center" id="id12">
+<a class="reference internal image-reference" href="_images/eclipse-install-03.png"><img alt="_images/eclipse-install-03.png" src="_images/eclipse-install-03.png" style="width: 726.7px; height: 189.15px;" /></a>
+<figcaption>
+<p><span class="caption-text">ダウンロードするべきものを選ぶ</span><a class="headerlink" href="#id12" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</div></blockquote>
+</li>
+<li><p>自分のOSとアーキテクチャを選んでダウンロードへ移動、Windowsであれば、Windowsの <span class="menuselection">x86_64</span> を選べばよい</p>
+<blockquote>
+<div><figure class="align-center" id="id13">
+<a class="reference internal image-reference" href="_images/eclipse-install-04.png"><img alt="_images/eclipse-install-04.png" src="_images/eclipse-install-04.png" style="width: 703.95px; height: 349.7px;" /></a>
+<figcaption>
+<p><span class="caption-text">OS/アーキテクチャの選択</span><a class="headerlink" href="#id13" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</div></blockquote>
+</li>
+<li><p>ダウンロードしたファイル(Windows版ならzip形式)を適当な場所に展開する</p></li>
+</ol>
+<p>なお展開ですが、配布zipファイルでは、eclipseフォルダを内包しているため、授業環境(教科書)に適合させるのであれば、</p>
+<ol class="arabic simple">
+<li><p>Cドライブ直下に <code class="file docutils literal notranslate"><span class="pre">java</span></code> フォルダを作る</p></li>
+<li><p>zipファイル中の <code class="file docutils literal notranslate"><span class="pre">eclipse</span></code> フォルダを 1.の <cite>java</cite> フォルダ内に展開する</p></li>
+</ol>
+<p>となります。</p>
+<figure class="align-center" id="id14">
+<a class="reference internal image-reference" href="_images/eclipse-install-05.png"><img alt="_images/eclipse-install-05.png" src="_images/eclipse-install-05.png" style="width: 525.0px; height: 420.0px;" /></a>
+<figcaption>
+<p><span class="caption-text">ファイルの展開(<code class="file docutils literal notranslate"><span class="pre">C:/java</span></code> 以下)</span><a class="headerlink" href="#id14" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id4">
+<h2>日本語化<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>MergeDocプロジェクトへ行き、日本語化ツールの最新版を取得します。</p>
+<ol class="arabic">
+<li><p><a class="reference external" href="https://mergedoc.osdn.jp/">MergeDoc Project</a> に行きます</p></li>
+<li><p>&quot;Pleiades プラグイン・ダウンロード&quot; で利用する(Eclipseを入れた)OSを選んでインストーラーをダウンロードします</p>
+<blockquote>
+<div><figure class="align-default" id="id15">
+<a class="reference internal image-reference" href="_images/eclipse-install-06.png"><img alt="_images/eclipse-install-06.png" src="_images/eclipse-install-06.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">インストーラーの選択</span><a class="headerlink" href="#id15" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</div></blockquote>
+</li>
+<li><p>ダウンロードしたzipを展開し、中にある <strong class="command">setup.exe</strong> を実行してください、
+日本語化したいファイルとして、 <code class="file docutils literal notranslate"><span class="pre">C:/java/eclipse/eclipse.exe</span></code> を選び、日本語化開始のボタンをおしてください</p>
+<blockquote>
+<div><figure class="align-default" id="id16">
+<a class="reference internal image-reference" href="_images/eclipse-install-07.png"><img alt="_images/eclipse-install-07.png" src="_images/eclipse-install-07.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">セットアップの画面</span><a class="headerlink" href="#id16" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id17">
+<a class="reference internal image-reference" href="_images/eclipse-install-08.png"><img alt="_images/eclipse-install-08.png" src="_images/eclipse-install-08.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">eclipseを選択したところ(各項目にパスが入る)</span><a class="headerlink" href="#id17" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</div></blockquote>
+</li>
+</ol>
+<p>日本語化されれば、ウィンドウを閉じていき、 <strong class="command">Eclipse</strong> を起動してあげましょう。</p>
+<figure class="align-default" id="id18">
+<a class="reference internal image-reference" href="_images/eclipse-install-09.png"><img alt="_images/eclipse-install-09.png" src="_images/eclipse-install-09.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">セットアップ完了</span><a class="headerlink" href="#id18" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>なお、初回～数回起動する間は、日本語化に絡む内部キャッシュなどの生成が裏で行われるため、
+若干低速化するようです。諦めてください。</p>
+</div>
+</section>
+<section id="id5">
+<h2>設定の変更<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>起動したら、Eclipseの設定を適宜書き換えていきます。</p>
+<ul class="simple">
+<li><p>JREの追加(<span class="menuselection">Java‣インストール済みのJRE</span>)はここでは変更しません(利用するときにJDK/JREをその時のもので設定するため)</p></li>
+<li><p><span class="menuselection">一般‣ワークスペース‣テキスト・ファイル・エンコード</span> をデフォルトではなく『その他』側でUTF-8に設定</p></li>
+<li><dl class="simple">
+<dt>同じく <span class="menuselection">新規テキスト・ファイルの行区切り文字</span> を『その他』側でUNIXに設定</dt><dd><ul>
+<li><p>実はこれはしなくてもいいのですが、開発ではいろんなOSを跨いでの作業もあったりします。</p></li>
+<li><p>そのため、LFのみ(UNIXベース)に揃えておくことで不揃いな状況を回避できます。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<figure class="align-default" id="id19">
+<a class="reference internal image-reference" href="_images/eclipse-config-encoding.png"><img alt="_images/eclipse-config-encoding.png" src="_images/eclipse-config-encoding.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">エンコーディングと区切り文字の設定</span><a class="headerlink" href="#id19" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<ul>
+<li><p><span class="menuselection">一般‣エディター‣テキスト・エディター</span> にて
+- <span class="menuselection">タブでスペースを挿入</span> を有効化
+- <span class="menuselection">backspace/deleteで複数のスペースを除去</span> を有効化
+- <span class="menuselection">空白文字を表示</span> を有効化し、 <span class="menuselection">可視化の構成</span> にて以下の形で設定(適宜後で変更してかまいません)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>空白は『末尾』のみ有効にする</p></li>
+<li><p>全角空白は全て有効にする(本来、存在してはいけない文字)</p></li>
+<li><p>タブは全て有効にする</p></li>
+<li><p>復帰・改行は『末尾』のみ有効にする</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<figure class="align-default" id="id20">
+<a class="reference internal image-reference" href="_images/eclipse-config-visible-whitespace.png"><img alt="_images/eclipse-config-visible-whitespace.png" src="_images/eclipse-config-visible-whitespace.png" style="width: 30%;" /></a>
+<figcaption>
+<p><span class="caption-text">空白文字の設定例(上記基準に準拠)</span><a class="headerlink" href="#id20" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<p>空白文字はうっかり含めるとエンジニアを殺す効果があります。
+気づきにくいので入れないようにする必要があります。</p>
+<p>さしあたりこれだけで十分です。</p>
+</section>
+<section id="id6">
+<h2>プロファイルの抽出<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="admonition-todo admonition" id="id7">
+<p class="admonition-title">課題</p>
+<p>プロファイルの抽出と置き場所を書く</p>
+</div>
+</section>
+<section id="id8">
+<h2>アーカイブの作成<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="admonition-todo admonition" id="id9">
+<p class="admonition-title">課題</p>
+<p>アーカイブの作成方法を書く</p>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">カスタムEclipseの作成</a><ul>
+<li><a class="reference internal" href="#id1">ベース部分(Eclipse本体)</a></li>
+<li><a class="reference internal" href="#id4">日本語化</a></li>
+<li><a class="reference internal" href="#id5">設定の変更</a></li>
+<li><a class="reference internal" href="#id6">プロファイルの抽出</a></li>
+<li><a class="reference internal" href="#id8">アーカイブの作成</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="java.html"
+                          title="前の章へ">Javaの開発環境(JDK)</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="winterm-ssh.html"
+                          title="次の章へ">Windows Terminalとsshの利用</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/eclipse.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="winterm-ssh.html" title="Windows Terminalとsshの利用"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="java.html" title="Javaの開発環境(JDK)"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">カスタムEclipseの作成</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, SATO Daisuke &lt;densuke@st.kobedenshi.ac.jp&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+    </div>
+  </body>
+</html>
