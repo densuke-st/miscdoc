@@ -12,6 +12,7 @@
    :maxdepth: 1
    :caption: 目次:
 
+   jpconfig
    winget
    java
    winterm-ssh
