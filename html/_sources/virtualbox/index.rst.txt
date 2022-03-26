@@ -12,4 +12,3 @@ VirtualBox関連はいくつかありそうなので中で小分けにします�
     install
     vt
     import
-    snapshot
