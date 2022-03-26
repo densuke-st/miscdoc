@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Docker編 &#8212; 技術的小噺  ドキュメント</title>
+    <title>仮想マシン関係の機能調整(Windows10,11) &#8212; 技術的小噺  ドキュメント</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
@@ -17,8 +17,8 @@
     <script src="../_static/translations.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="Dockerが動いているかのチェック" href="start.html" />
-    <link rel="prev" title="スナップショット機能" href="../virtualbox/snapshot.html" /> 
+    <link rel="next" title="仮想マシンのインポート" href="import.html" />
+    <link rel="prev" title="インストール" href="install.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
@@ -27,13 +27,14 @@
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="start.html" title="Dockerが動いているかのチェック"
+          <a href="import.html" title="仮想マシンのインポート"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="../virtualbox/snapshot.html" title="スナップショット機能"
+          <a href="install.html" title="インストール"
              accesskey="P">前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Docker編</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">VirtualBox関連</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">仮想マシン関係の機能調整(Windows10,11)</a></li> 
       </ul>
     </div>  
 
@@ -42,28 +43,28 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="docker">
-<span id="docker-index"></span><h1>Docker編<a class="headerlink" href="#docker" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>数が多そうな気もするので分割していきます。</p>
-<p>なお、一旦Dockerが動けばホストOSの種類はあまり関係ないので、主にmacOS/Linux系のプロンプトで進めます。</p>
+  <section id="windows10-11">
+<span id="virtualbox-vt"></span><h1>仮想マシン関係の機能調整(Windows10,11)<a class="headerlink" href="#windows10-11" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>VirtualBoxを単純に使うのであれば特段困らないのですが、
+<a class="reference internal" href="../docker/index.html#docker-index"><span class="std std-ref">Docker</span></a> を使う場合は地味にぶつかって困ることがあります。</p>
+<p>『Windowsの機能の有効化または無効化』にて、2つの機能を有効にするといいでしょう。</p>
 <dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">%</span></code></dt><dd><p>macOS/Linuxのzshのプロンプト</p>
+<dt>(Homeエディション)仮想マシンプラットフォーム</dt><dd><p>仮想マシン(Hyper-Vベース)を使うための機能を提供します。Docker DesktopやWSL2の利用で必要となります。</p>
 </dd>
-<dt><code class="code docutils literal notranslate"><span class="pre">$</span></code></dt><dd><p>macOS/Linuxのbashのプロンプト</p>
+<dt>(Proエディション)Hyper-V</dt><dd><p>Hyper-Vを使うための機能を提供します。Docker DesktopやWSL2の利用で必要となります。
+Proエディションの場合、『仮想マシンプラットフォーム』も選べますが、こちらを選ぶと良いでしょう(リソース管理等はこちらが有利)。</p>
 </dd>
-<dt><code class="code docutils literal notranslate"><span class="pre">#</span></code></dt><dd><p>macOS/Linuxの管理者での操作(<strong class="command">sudo</strong> 使うべし)</p>
-</dd>
-<dt><code class="code docutils literal notranslate"><span class="pre">PS&gt;</span></code></dt><dd><p>WindowsのPowerShellのプロンプト</p>
+<dt>(Home/Pro)Windowsハイパーバイザープラットフォーム</dt><dd><p>仮想化機構(Hyper-Vなど)を利用するときに、仮想化支援機能の並行利用を補助するための環境を提供します。
+Docker Desktop(WSL2利用)とVirtualBoxを同時利用する場合などはこちらも有効にする必要があります。</p>
 </dd>
 </dl>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">目次:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="start.html">Dockerが動いているかのチェック</a></li>
-<li class="toctree-l1"><a class="reference internal" href="start.html#id1">実際に走らせて確認する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.html">よく使いそうなDockerのコマンド</a></li>
-</ul>
-</div>
+<p>以上の設定を変更した場合、構成変更のための再起動が必要となります。</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/windows-feature.png"><img alt="../_images/windows-feature.png" src="../_images/windows-feature.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-text">Windows11 Homeエディションでの設定例(VirtualBox+Docker Desktopの共存向け)</span><a class="headerlink" href="#id1" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
 </section>
 
 
@@ -75,18 +76,18 @@
         <div class="sphinxsidebarwrapper">
   <div>
     <h4>前のトピックへ</h4>
-    <p class="topless"><a href="../virtualbox/snapshot.html"
-                          title="前の章へ">スナップショット機能</a></p>
+    <p class="topless"><a href="install.html"
+                          title="前の章へ">インストール</a></p>
   </div>
   <div>
     <h4>次のトピックへ</h4>
-    <p class="topless"><a href="start.html"
-                          title="次の章へ">Dockerが動いているかのチェック</a></p>
+    <p class="topless"><a href="import.html"
+                          title="次の章へ">仮想マシンのインポート</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>このページ</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/docker/index.rst.txt"
+      <li><a href="../_sources/virtualbox/vt.rst.txt"
             rel="nofollow">ソースコードを表示</a></li>
     </ul>
    </div>
@@ -111,13 +112,14 @@
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="start.html" title="Dockerが動いているかのチェック"
+          <a href="import.html" title="仮想マシンのインポート"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="../virtualbox/snapshot.html" title="スナップショット機能"
+          <a href="install.html" title="インストール"
              >前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Docker編</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >VirtualBox関連</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">仮想マシン関係の機能調整(Windows10,11)</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

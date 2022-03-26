@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>日本語の設定 &#8212; 技術的小噺  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="wingetの利用" href="winget.html" />
+    <link rel="prev" title="技術的小噺" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="winget.html" title="wingetの利用"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="技術的小噺"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">日本語の設定</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="jpconfig">
+<span id="id1"></span><h1>日本語の設定<a class="headerlink" href="#jpconfig" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>日本人エンジニアにとって、日本語の切り替えを行いながらのコード入力は非常につらいです。
+また、日本語のIM(IME)の扱いについては、非常に注意が必要です。</p>
+<section id="id2">
+<h2>フォントを見直す<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>フォントについては、エンジニアとして使うツール類に関しては、以下を注意しておくといいでしょう。</p>
+<ul class="simple">
+<li><p>英数の区別が付きやすいもの</p>
+<ul>
+<li><p>数字1と英小文字lやiと英大文字I</p></li>
+<li><p>数字0と英大文字O(稀に小文字oも)</p></li>
+</ul>
+</li>
+<li><p>空白が全角か半角か(というか全角の空白は存在自体がNG)</p></li>
+<li><p>全角文字(ひらがな、カタカナ、漢字など)の幅が半角文字に対して統一のピッチで用意されているもの</p>
+<ul>
+<li><p>いわゆる2倍系(一般的な非プロポーショナルフォント)を使うのが基準</p></li>
+<li><p>白源だと3:5というのもあります、読みやすくてピッチが揃えやすくていいかもしれませんが、端末などには不向き</p></li>
+</ul>
+</li>
+</ul>
+<p>これらを考慮しているエンジニア(プログラマ)向けフォントはオープンなもので結構みつかります。</p>
+<ul class="simple">
+<li><p>白源(HackGen)系統</p></li>
+<li><p>Ricty Diminished.</p></li>
+<li><p>Migu 1M etc...</p></li>
+</ul>
+<p>これら調べて導入し、IDEのフォント環境を確認しておくと良いでしょう。</p>
+</section>
+<section id="id3">
+<h2>全角空白を撲滅せよ<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>残念ながら全角の空白は非エンジニアは無頓着に使う(行頭インデント調整のため等)ので、外部から入るものは仕方が無い。
+しかし私たちが全角の空白を含まないようにすることはもちろん可能である。
+下手に存在すると <strong>プログラマが死ぬ</strong> ため、自分たちが元凶にならないようにすべきである。</p>
+<ul class="simple">
+<li><p>白源系フォントは全角空白が可視化されます</p></li>
+<li><p>IDEでは全角空白を可視化してくれることもあります</p>
+<ul>
+<li><p>Eclipseだと非可視文字の可視化があるので、全角空白にチェックを入れておくことのがマナー</p></li>
+<li><p>VScodeだと <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=mosapride.zenkaku">可視化の拡張(zenkaku)</a> もあるので利用するとよい</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h2>全角英数字を撲滅せよ<a class="headerlink" href="#id4" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>私たちが加害者にならないよう、IMの設定を確認することが嗜み。</p>
+<ul class="simple">
+<li><p>macOSの日本語入力は標準的な方法で全角英数字・記号を排除する仕組みが無いため使用禁止</p>
+<ul>
+<li><p>ちょっと言いすぎではある、もしかすると最新版でまた状況変わっているかもしれないので要注意</p></li>
+</ul>
+</li>
+<li><p>Windowsの標準的なIMEは変更可能なので、初期段階でいじっておくこと</p></li>
+<li><p>Google日本語入力やATOK(Passport)も設定可能</p></li>
+</ul>
+<p>変更のポリシーとしては、以下を意識すれば基本的に問題なし</p>
+<ul class="simple">
+<li><p>英数字と空白は半角固定、入力時から半角固定</p></li>
+<li><p>カタカナは全角のみ</p>
+<ul>
+<li><p>Unicode的には半角カナもあるので可能そうではあるがプログラミングでのコンセンサスは微妙なので使わない</p></li>
+</ul>
+</li>
+<li><p>記号の類いは少し注意が必要</p>
+<ul>
+<li><p>原則半角</p></li>
+<li><p>カギ括弧(日本語で使うもの)は全角固定</p></li>
+<li><p>クォート記号ももちろん半角</p></li>
+<li><p>句読点(<cite>。、</cite>)は全角固定</p></li>
+<li><p>マイナス記号(<cite>-</cite>)はもちろん半角、全角の伸ばし棒(<cite>ー</cite>)との区別はきちんとすること</p>
+<ul>
+<li><p>一部金融機関で全角伸ばし棒を受容しないふざけたバリデーションもありますがそこはしかたない…</p></li>
+</ul>
+</li>
+<li><p>おそらく悩みどころはチルダ(<cite>～</cite> と <cite>~</cite>) 感情表現として日本語で伸ばし棒代わりに使うことがあるため『学習』に設定しています</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="windows11ime">
+<h2>参考: Windows11の日本語IMEの場合<a class="headerlink" href="#windows11ime" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>とりあえずWindows11の設定画面から進めて探していく。</p>
+<figure class="align-default" id="id6">
+<a class="reference internal image-reference" href="_images/jpconfig-1.png"><img alt="_images/jpconfig-1.png" src="_images/jpconfig-1.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">個人設定からMicrosoft IMEの全般に入る</span><a class="headerlink" href="#id6" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><span class="guilabel">スペース</span> → 常に半角</p></li>
+<li><p><span class="guilabel">テンキー</span> → 常に半角</p></li>
+</ul>
+<figure class="align-default" id="id7">
+<a class="reference internal image-reference" href="_images/jpconfig-2.png"><img alt="_images/jpconfig-2.png" src="_images/jpconfig-2.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">変換候補に半角カタカナを入れるのはNG</span><a class="headerlink" href="#id7" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id8">
+<a class="reference internal image-reference" href="_images/jpconfig-3.png"><img alt="_images/jpconfig-3.png" src="_images/jpconfig-3.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">まともな設定は『以前のバージョンのMicrosoft IME』でないとできないので注意</span><a class="headerlink" href="#id8" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<p>どこかで日本語入力状態にしてプロパティを開く</p>
+<figure class="align-default" id="id9">
+<a class="reference internal image-reference" href="_images/jpconfig-4.png"><img alt="_images/jpconfig-4.png" src="_images/jpconfig-4.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">日本語入力にしてから『あ』からプロパティを開く</span><a class="headerlink" href="#id9" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id10">
+<a class="reference internal image-reference" href="_images/jpconfig-5.png"><img alt="_images/jpconfig-5.png" src="_images/jpconfig-5.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">詳細設定ボタンをクリック</span><a class="headerlink" href="#id10" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id11">
+<a class="reference internal image-reference" href="_images/jpconfig-6.png"><img alt="_images/jpconfig-6.png" src="_images/jpconfig-6.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">全角/半角の設定を確認</span><a class="headerlink" href="#id11" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><span class="guilabel">カタカナ</span> → 常に全角に変換</p></li>
+<li><p><span class="guilabel">英字</span> と <span class="guilabel">数字</span> → 常に半角に変換</p></li>
+<li><p><span class="guilabel">記号</span> → 常に半角に変換</p>
+<ul>
+<li><p>ただしチルダ記号だけ『前回の変換結果に従う』でその時の状況による変換を許容</p></li>
+</ul>
+</li>
+</ul>
+<p>半角チルダを入れるときはIMEをオフにするのであれば、常に全角にしておいてもかまわない。</p>
+</section>
+</section>
+<section id="id5">
+<h1>たいせつなおまけ<a class="headerlink" href="#id5" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>『 <strong>日本語は2バイト</strong> 』 は過去の話としておきましょう(今でも使われますが)。</p>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">日本語の設定</a><ul>
+<li><a class="reference internal" href="#id2">フォントを見直す</a></li>
+<li><a class="reference internal" href="#id3">全角空白を撲滅せよ</a></li>
+<li><a class="reference internal" href="#id4">全角英数字を撲滅せよ</a></li>
+<li><a class="reference internal" href="#windows11ime">参考: Windows11の日本語IMEの場合</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">たいせつなおまけ</a></li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="index.html"
+                          title="前の章へ">技術的小噺</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="winget.html"
+                          title="次の章へ">wingetの利用</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/jpconfig.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="winget.html" title="wingetの利用"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="技術的小噺"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">日本語の設定</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, SATO Daisuke &lt;densuke@st.kobedenshi.ac.jp&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+    </div>
+  </body>
+</html>

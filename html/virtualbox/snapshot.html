@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Docker編 &#8212; 技術的小噺  ドキュメント</title>
+    <title>スナップショット機能 &#8212; 技術的小噺  ドキュメント</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
@@ -17,8 +17,8 @@
     <script src="../_static/translations.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="Dockerが動いているかのチェック" href="start.html" />
-    <link rel="prev" title="スナップショット機能" href="../virtualbox/snapshot.html" /> 
+    <link rel="next" title="Docker編" href="../docker/index.html" />
+    <link rel="prev" title="仮想マシンのインポート" href="import.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
@@ -27,13 +27,14 @@
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="start.html" title="Dockerが動いているかのチェック"
+          <a href="../docker/index.html" title="Docker編"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="../virtualbox/snapshot.html" title="スナップショット機能"
+          <a href="import.html" title="仮想マシンのインポート"
              accesskey="P">前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Docker編</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">VirtualBox関連</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">スナップショット機能</a></li> 
       </ul>
     </div>  
 
@@ -42,28 +43,26 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="docker">
-<span id="docker-index"></span><h1>Docker編<a class="headerlink" href="#docker" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>数が多そうな気もするので分割していきます。</p>
-<p>なお、一旦Dockerが動けばホストOSの種類はあまり関係ないので、主にmacOS/Linux系のプロンプトで進めます。</p>
-<dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">%</span></code></dt><dd><p>macOS/Linuxのzshのプロンプト</p>
-</dd>
-<dt><code class="code docutils literal notranslate"><span class="pre">$</span></code></dt><dd><p>macOS/Linuxのbashのプロンプト</p>
-</dd>
-<dt><code class="code docutils literal notranslate"><span class="pre">#</span></code></dt><dd><p>macOS/Linuxの管理者での操作(<strong class="command">sudo</strong> 使うべし)</p>
-</dd>
-<dt><code class="code docutils literal notranslate"><span class="pre">PS&gt;</span></code></dt><dd><p>WindowsのPowerShellのプロンプト</p>
-</dd>
-</dl>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">目次:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="start.html">Dockerが動いているかのチェック</a></li>
-<li class="toctree-l1"><a class="reference internal" href="start.html#id1">実際に走らせて確認する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.html">よく使いそうなDockerのコマンド</a></li>
-</ul>
-</div>
+  <section id="virtualbox-snapshot">
+<span id="id1"></span><h1>スナップショット機能<a class="headerlink" href="#virtualbox-snapshot" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>VirtualBoxでは、スナップショット(snapshot)という機能で、VMの状態を保存しておくことができます。
+何か危ないことをするときは念のためにスナップショットを作成した上で作業を行い、失敗したときに巻き戻しができるようになっていると安全です。</p>
+<section id="id2">
+<h2>スナップショットモード<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>VMを選んで、スナップショットの画面に切り替えることができます。同じ操作で元の画面に戻ります。</p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/vm-snapshot1.png"><img alt="../_images/vm-snapshot1.png" src="../_images/vm-snapshot1.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">スナップショットの場所</span><a class="headerlink" href="#id3" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/vm-snapshot2.png"><img alt="../_images/vm-snapshot2.png" src="../_images/vm-snapshot2.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-text">スナップショットの管理画面(初期状態)</span><a class="headerlink" href="#id4" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</section>
 </section>
 
 
@@ -74,19 +73,29 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <div>
+    <h3><a href="../index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">スナップショット機能</a><ul>
+<li><a class="reference internal" href="#id2">スナップショットモード</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
     <h4>前のトピックへ</h4>
-    <p class="topless"><a href="../virtualbox/snapshot.html"
-                          title="前の章へ">スナップショット機能</a></p>
+    <p class="topless"><a href="import.html"
+                          title="前の章へ">仮想マシンのインポート</a></p>
   </div>
   <div>
     <h4>次のトピックへ</h4>
-    <p class="topless"><a href="start.html"
-                          title="次の章へ">Dockerが動いているかのチェック</a></p>
+    <p class="topless"><a href="../docker/index.html"
+                          title="次の章へ">Docker編</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>このページ</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/docker/index.rst.txt"
+      <li><a href="../_sources/virtualbox/snapshot.rst.txt"
             rel="nofollow">ソースコードを表示</a></li>
     </ul>
    </div>
@@ -111,13 +120,14 @@
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="start.html" title="Dockerが動いているかのチェック"
+          <a href="../docker/index.html" title="Docker編"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="../virtualbox/snapshot.html" title="スナップショット機能"
+          <a href="import.html" title="仮想マシンのインポート"
              >前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Docker編</a></li> 
+          <li class="nav-item nav-item-1"><a href="index.html" >VirtualBox関連</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">スナップショット機能</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

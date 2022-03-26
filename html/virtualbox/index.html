@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Docker編 &#8212; 技術的小噺  ドキュメント</title>
+    <title>VirtualBox関連 &#8212; 技術的小噺  ドキュメント</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinxdoc.css" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css" />
@@ -17,8 +17,8 @@
     <script src="../_static/translations.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="検索" href="../search.html" />
-    <link rel="next" title="Dockerが動いているかのチェック" href="start.html" />
-    <link rel="prev" title="スナップショット機能" href="../virtualbox/snapshot.html" /> 
+    <link rel="next" title="インストール" href="install.html" />
+    <link rel="prev" title="Windows Terminalとsshの利用" href="../winterm-ssh.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>ナビゲーション</h3>
@@ -27,13 +27,13 @@
           <a href="../genindex.html" title="総合索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="start.html" title="Dockerが動いているかのチェック"
+          <a href="install.html" title="インストール"
              accesskey="N">次へ</a> |</li>
         <li class="right" >
-          <a href="../virtualbox/snapshot.html" title="スナップショット機能"
+          <a href="../winterm-ssh.html" title="Windows Terminalとsshの利用"
              accesskey="P">前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Docker編</a></li> 
+        <li class="nav-item nav-item-this"><a href="">VirtualBox関連</a></li> 
       </ul>
     </div>  
 
@@ -42,26 +42,16 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="docker">
-<span id="docker-index"></span><h1>Docker編<a class="headerlink" href="#docker" title="このヘッドラインへのパーマリンク">¶</a></h1>
-<p>数が多そうな気もするので分割していきます。</p>
-<p>なお、一旦Dockerが動けばホストOSの種類はあまり関係ないので、主にmacOS/Linux系のプロンプトで進めます。</p>
-<dl class="simple">
-<dt><code class="code docutils literal notranslate"><span class="pre">%</span></code></dt><dd><p>macOS/Linuxのzshのプロンプト</p>
-</dd>
-<dt><code class="code docutils literal notranslate"><span class="pre">$</span></code></dt><dd><p>macOS/Linuxのbashのプロンプト</p>
-</dd>
-<dt><code class="code docutils literal notranslate"><span class="pre">#</span></code></dt><dd><p>macOS/Linuxの管理者での操作(<strong class="command">sudo</strong> 使うべし)</p>
-</dd>
-<dt><code class="code docutils literal notranslate"><span class="pre">PS&gt;</span></code></dt><dd><p>WindowsのPowerShellのプロンプト</p>
-</dd>
-</dl>
+  <section id="virtualbox">
+<span id="id1"></span><h1>VirtualBox関連<a class="headerlink" href="#virtualbox" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>VirtualBox関連はいくつかありそうなので中で小分けにします。</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">目次:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="start.html">Dockerが動いているかのチェック</a></li>
-<li class="toctree-l1"><a class="reference internal" href="start.html#id1">実際に走らせて確認する</a></li>
-<li class="toctree-l1"><a class="reference internal" href="commands.html">よく使いそうなDockerのコマンド</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">インストール</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vt.html">仮想マシン関係の機能調整(Windows10,11)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="import.html">仮想マシンのインポート</a></li>
+<li class="toctree-l1"><a class="reference internal" href="snapshot.html">スナップショット機能</a></li>
 </ul>
 </div>
 </section>
@@ -75,18 +65,18 @@
         <div class="sphinxsidebarwrapper">
   <div>
     <h4>前のトピックへ</h4>
-    <p class="topless"><a href="../virtualbox/snapshot.html"
-                          title="前の章へ">スナップショット機能</a></p>
+    <p class="topless"><a href="../winterm-ssh.html"
+                          title="前の章へ">Windows Terminalとsshの利用</a></p>
   </div>
   <div>
     <h4>次のトピックへ</h4>
-    <p class="topless"><a href="start.html"
-                          title="次の章へ">Dockerが動いているかのチェック</a></p>
+    <p class="topless"><a href="install.html"
+                          title="次の章へ">インストール</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>このページ</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/docker/index.rst.txt"
+      <li><a href="../_sources/virtualbox/index.rst.txt"
             rel="nofollow">ソースコードを表示</a></li>
     </ul>
    </div>
@@ -111,13 +101,13 @@
           <a href="../genindex.html" title="総合索引"
              >索引</a></li>
         <li class="right" >
-          <a href="start.html" title="Dockerが動いているかのチェック"
+          <a href="install.html" title="インストール"
              >次へ</a> |</li>
         <li class="right" >
-          <a href="../virtualbox/snapshot.html" title="スナップショット機能"
+          <a href="../winterm-ssh.html" title="Windows Terminalとsshの利用"
              >前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">技術的小噺  ドキュメント</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Docker編</a></li> 
+        <li class="nav-item nav-item-this"><a href="">VirtualBox関連</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
