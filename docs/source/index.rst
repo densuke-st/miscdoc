@@ -12,16 +12,21 @@
    :maxdepth: 1
    :caption: 目次:
 
+   jpconfig
    winget
    java
+   eclipse
    ssh-key
    winterm-ssh
+   virtualbox/index
    docker/index
 
 
 Github Pagesで作成しております。
 `ページソース <https://github.com/densuke-st/miscdoc/>`_ も必要ならご利用ください。
 mainブランチの更新に合わせて自動で本ページは更新されます。
+
+.. todolist::
 
 .. Indices and tables
    ==================
