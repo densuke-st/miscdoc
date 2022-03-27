@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>公開鍵ログイン &#8212; 技術的小噺  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="Windows Terminalとsshの利用" href="winterm-ssh.html" />
+    <link rel="prev" title="カスタムEclipseの作成" href="eclipse.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="winterm-ssh.html" title="Windows Terminalとsshの利用"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="eclipse.html" title="カスタムEclipseの作成"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">公開鍵ログイン</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="ssh-key">
+<span id="id1"></span><h1>公開鍵ログイン<a class="headerlink" href="#ssh-key" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<section id="tl-dr">
+<h2>TL;DR<a class="headerlink" href="#tl-dr" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">Windows側</span><a class="headerlink" href="#id11" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span>
+<span class="c1"># 保存場所の確認(パスが出る)は標準で良い</span>
+<span class="c1"># 秘密鍵のパスフレーズは忘れない範囲で適当に長い文字列で ※超重要</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">Get</span><span class="o">-</span><span class="n">Content</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="o">.</span><span class="n">pub</span> <span class="o">|</span> <span class="n">clip</span> <span class="c1"># 出力される公開鍵をクリップボードにコピーしておく</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">Linux(VM)側</span><a class="headerlink" href="#id12" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir -m 0755 -pv ~/.ssh
+$ echo &quot;&lt;Win側でクリップボードに入れた公開鍵文字列をペースト&gt;&quot; &gt; ~/.ssh/authorized_keys
+$ chmod 0600 ~/.ssh/authorized_keys
+</pre></div>
+</div>
+</div>
+<p>これでWindowsのターミナル側からsshのログイン時にパスワードではなくパスフレーズ(Passphrase)を聞いてくれば成功、秘密鍵に設定したパスフレーズでログインすれば良い。</p>
+</section>
+<section id="ssh">
+<h2>sshの公開鍵ログインとは<a class="headerlink" href="#ssh" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>sshでは、ログイン時にパスワードを(暗号回線とはいえ)リモートサーバーに投げない仕組みとして、公開鍵によるログインをサポートしています。</p>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>実際には、プラグインやLinux側のPAM(Plugable Authentication Module)を組み合わせることで、その他の認証方法をサポートします(スマートカードやGoogle2要素認証とか)</p>
+</div>
+<p>公開鍵は既に学んでいるとおり、2つの鍵を使って情報を暗号化・複合化するメカニズムを提供するアルゴリズムです。</p>
+<dl class="simple">
+<dt>秘密鍵(Private Key)</dt><dd><p>外部に晒してはいけない隠すべき鍵、この鍵で暗号化すると暗号鍵自身では復号できない。
+でもペアとなっている公開鍵で暗号化した暗号は復号できる。</p>
+</dd>
+<dt>公開鍵(Public Key)</dt><dd><p>外部に公開してかまわない鍵、この鍵で暗号化すると、公開鍵自身では復号できない <a class="footnote-reference brackets" href="#pub" id="id2">1</a> 。
+ペアとなっている秘密鍵でのみ復号できる。</p>
+</dd>
+</dl>
+<figure class="align-default" id="id13">
+<a class="reference internal image-reference" href="_images/ssh-key.drawio.png"><img alt="_images/ssh-key.drawio.png" src="_images/ssh-key.drawio.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-text">ssh公開鍵と秘密鍵の関係図</span><a class="headerlink" href="#id13" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+<p>公開鍵ベースのログインにする場合、チャレンジコードをというランダムな情報をログイン先であるサーバーが生成し、
+ログインしようとしているユーザーの公開鍵を用いて暗号化します。
+暗号化されたチャレンジコードを受け取ったクライアント側は、対となる秘密鍵を用いてチャレンジコードを復号化して取得します。
+コードを暗号回線内で送信し、認証の代わりとして利用します。
+万一途中でのぞき見されたとしても、チャレンジコードは使い捨てのため、再利用はできません(リプレイ攻撃対策)。</p>
+<figure class="align-default" id="id14">
+<a class="reference internal image-reference" href="_images/ssh-key-auth.drawio.png"><img alt="_images/ssh-key-auth.drawio.png" src="_images/ssh-key-auth.drawio.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-text">公開鍵ベースのログイン概念図</span><a class="headerlink" href="#id14" title="この画像へのパーマリンク">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id3">
+<h2>鍵ペアの生成<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>鍵の生成は、 <strong class="command">ssh</strong> のツールとして移用されている <strong class="command">ssh-keygen</strong> を使います。</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">ssh公開鍵ペアの生成(<strong class="command">ssh-keygen</strong>)</span><a class="headerlink" href="#id15" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span>
+<span class="n">Generating</span> <span class="n">public</span><span class="o">/</span><span class="n">private</span> <span class="n">rsa</span> <span class="n">key</span> <span class="n">pair</span><span class="o">.</span>
+<span class="c1"># ↓ 鍵ファイルの作成パスの確認、通常はこのままでOK</span>
+<span class="n">Enter</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">which</span> <span class="n">to</span> <span class="n">save</span> <span class="n">the</span> <span class="n">key</span> <span class="p">(</span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">densuke</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">):</span>
+<span class="c1"># 既に鍵を作っている場合は上書きの確認が出ます</span>
+<span class="c1"># ↓ パスフレーズの設定、セキュリティ上重要なので、長い単語でパスフレーズを構成しておくこと</span>
+<span class="n">Enter</span> <span class="n">passphrase</span> <span class="p">(</span><span class="n">empty</span> <span class="k">for</span> <span class="n">no</span> <span class="n">passphrase</span><span class="p">):</span> <span class="p">(</span><span class="n">ここの入力は画面に出ません</span><span class="p">)</span>
+<span class="n">Enter</span> <span class="n">passphrase</span> <span class="p">(</span><span class="n">empty</span> <span class="k">for</span> <span class="n">no</span> <span class="n">passphrase</span><span class="p">):</span> <span class="p">(</span><span class="n">再入力してチェック</span><span class="p">)</span>
+
+<span class="c1"># ↓ 作成に成功すると鍵の指紋と鍵から生成されるランダムアートが出力されます</span>
+<span class="n">The</span> <span class="n">key</span> <span class="n">fingerprint</span> <span class="ow">is</span><span class="p">:</span>
+<span class="n">SHA256</span><span class="p">:</span><span class="n">yNDqhUFcakAEKOUavMs</span><span class="o">+</span><span class="n">ha8UEVmr09jZ7KO8sZD4Zqg</span> <span class="n">densuke</span><span class="nd">@example</span>
+<span class="n">The</span> <span class="n">key</span><span class="s1">&#39;s randomart image is:</span>
+<span class="o">+---</span><span class="p">[</span><span class="n">RSA</span> <span class="mi">3072</span><span class="p">]</span><span class="o">----+</span>
+<span class="o">|</span><span class="n">o</span><span class="o">*</span><span class="n">Bo</span><span class="o">...</span>          <span class="o">|</span>
+<span class="o">|+</span><span class="n">o</span><span class="o">.</span><span class="n">ooo</span>           <span class="o">|</span>
+<span class="o">|</span><span class="n">oo</span><span class="o">..=</span> <span class="o">.</span>          <span class="o">|</span>
+<span class="o">|</span> <span class="n">oB</span><span class="o">.+*</span> <span class="o">.</span>         <span class="o">|</span>
+<span class="o">|.*.+</span><span class="n">oo</span><span class="o">+</span> <span class="n">S</span>        <span class="o">|</span>
+<span class="o">|</span><span class="n">o</span><span class="o">.=</span><span class="n">o</span><span class="o">..</span>           <span class="o">|</span>
+<span class="o">|.</span><span class="n">Bo</span><span class="o">..</span><span class="n">o</span>           <span class="o">|</span>
+<span class="o">|+</span><span class="n">o</span><span class="o">=.+</span> <span class="o">.</span>          <span class="o">|</span>
+<span class="o">|</span><span class="n">E</span><span class="o">=+=.</span>            <span class="o">|</span>
+<span class="o">+----</span><span class="p">[</span><span class="n">SHA256</span><span class="p">]</span><span class="o">-----+</span>
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li><p>鍵の指紋(fingerprint)は鍵の一致性を確認するためのダイジェストです、同一鍵ペアでないと同じ文字列になりません</p></li>
+<li><p>ランダムアートは鍵から生成されるアスキーアート(AA)で、1ビットでも異なるとまったく違うものとなります、ぱっと見で比較するために使えます。</p></li>
+</ul>
+<p>標準的な暗号化では、RSA方式が採用されています <a class="footnote-reference brackets" href="#kl" id="id4">2</a> 。
+鍵のファイルは <code class="file docutils literal notranslate"><span class="pre">id_rsa</span></code> が <strong>秘密鍵</strong> で、 <code class="file docutils literal notranslate"><span class="pre">id_rsa.pub</span></code> が <strong>公開鍵</strong> になっています。
+ファイルのベース名(<code class="file docutils literal notranslate"><span class="pre">id_rsa</span></code>)が鍵ペアでは一致するように生成されます。</p>
+<p>もし鍵ファイルが既に存在する場合は上書きの危険があるため注意が出ます。</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">既に鍵ファイルがある場合の注意喚起</span><a class="headerlink" href="#id16" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\densuke/.ssh/id_rsa):
+C:\Users\densuke/.ssh/id_rsa already exists.
+Overwrite (y/n)?  (キャンセルするべき)
+</pre></div>
+</div>
+</div>
+<p>この場合は、オプション <code class="code docutils literal notranslate"><span class="pre">-f</span> <span class="pre">出力ファイル名</span></code> で鍵のベース名を変更するといいでしょう。</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">鍵ファイル名sampleで出力する例</span><a class="headerlink" href="#id17" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">f</span> <span class="o">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">sample</span> <span class="c1"># ホームディレクトリ直下の :file:`.ssh` ディレクトリ内に作るのが基本</span>
+</pre></div>
+</div>
+</div>
+<p>なお、WindowsのPowerShellではチルダ展開(<cite>~</cite> をホームディレクトリに展開する操作)が中途半端に行われない残念仕様のため、
+カレントディレクトリがホームになっていることを前提に相対パスで書くのが短くて済みそうです <a class="footnote-reference brackets" href="#home" id="id5">3</a> 。</p>
+</section>
+<section id="id6">
+<h2>鍵の登録<a class="headerlink" href="#id6" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>作成した鍵のうち、公開鍵をLinux(ログインしたいホスト)に設定します。
+ここでは授業で使うVMにしてみましょう。</p>
+<section id="id7">
+<h3>公開鍵の準備<a class="headerlink" href="#id7" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>公開鍵ファイルを出力し、クリップボードに入れておきます。
+地味なコマンドですが、ストリームの内容をクリップボードにいれる <strong class="command">clip</strong> が効きます。</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">ssh公開鍵をクリップボードに入れる</span><a class="headerlink" href="#id18" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 内容の確認、鍵ファイルは必ず公開鍵ファイル(.pub)を指定すること</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">get</span><span class="o">-</span><span class="n">content</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="o">.</span><span class="n">pub</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">rsa</span> <span class="n">AAAA</span><span class="o">...</span><span class="p">(</span><span class="n">中略</span><span class="p">)</span><span class="o">..</span><span class="mf">.3</span><span class="n">QdZsY6f2Sk</span><span class="o">=</span> <span class="n">densuke</span><span class="nd">@example</span>
+
+<span class="c1"># 出力を確認したら、パイプ渡しでclipコマンドに送り、クリップボードに入れる</span>
+<span class="n">PS</span><span class="o">&gt;</span> <span class="n">get</span><span class="o">-</span><span class="n">content</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="o">.</span><span class="n">pub</span> <span class="o">|</span> <span class="n">clip</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id8">
+<h3>公開鍵の登録<a class="headerlink" href="#id8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>続いてLinux側で公開鍵ファイルを用意し、登録します。</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">公開鍵の登録</span><a class="headerlink" href="#id19" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># ssh設定用のディレクトリを(無ければ)作る、
+# 他人がアクセスできないアクセス権にしないと無視されるので注意
+$ mkdir -m 0700 -pv ~/.ssh
+# 鍵を登録する、途中でクリップボードに入れた鍵を貼り付ける操作が
+# 入るので操作に注意、あと手入力の場合はファイル名ミスタイプに注意
+$ echo &quot;ここにクリップボードから公開鍵を貼り付け&quot; &gt; ~/.ssh/authorized_keys
+$ chmod 600 ~/.ssh/authorized_keys # こちらも他人のアクセスができないようにする
+$ exit
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="id9">
+<h2>接続の確認<a class="headerlink" href="#id9" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ログインを試みます。</p>
+<p>以下の出力は授業用VMに従来の方法(パスワードログイン)の例です。</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">従来のパスワードベースログインの例</span><a class="headerlink" href="#id20" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">densuke</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="n">sl</span>
+<span class="ne">Warning</span><span class="p">:</span> <span class="n">Permanently</span> <span class="n">added</span> <span class="s1">&#39;[localhost]:2022&#39;</span> <span class="p">(</span><span class="n">ED25519</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">known</span> <span class="n">hosts</span><span class="o">.</span>
+<span class="hll"><span class="n">linux</span><span class="nd">@localhost</span><span class="s1">&#39;s password:</span>
+</span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">Ubuntu</span> <span class="mf">20.04.4</span> <span class="n">LTS</span> <span class="p">(</span><span class="n">GNU</span><span class="o">/</span><span class="n">Linux</span> <span class="mf">5.4.0</span><span class="o">-</span><span class="mi">104</span><span class="o">-</span><span class="n">generic</span> <span class="n">x86_64</span><span class="p">)</span>
+
+<span class="o">*</span> <span class="n">Documentation</span><span class="p">:</span>  <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">help</span><span class="o">.</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span>
+<span class="o">*</span> <span class="n">Management</span><span class="p">:</span>     <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">landscape</span><span class="o">.</span><span class="n">canonical</span><span class="o">.</span><span class="n">com</span>
+<span class="o">*</span> <span class="n">Support</span><span class="p">:</span>        <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">advantage</span>
+<span class="n">Last</span> <span class="n">login</span><span class="p">:</span> <span class="n">Wed</span> <span class="n">Mar</span> <span class="mi">16</span> <span class="mi">01</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">41</span> <span class="mi">2022</span> <span class="kn">from</span> <span class="mf">10.0.2.2</span>
+</pre></div>
+</div>
+</div>
+<p>パスワードを聞かれています。</p>
+<p>続いて公開鍵ベースに切り替えたときです。サーバー側公開鍵を発見した場合に自動的に切り替わります。</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">公開鍵を検出して公開鍵ベースログインに切り替わった例</span><a class="headerlink" href="#id21" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">densuke</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="n">sl</span>
+<span class="ne">Warning</span><span class="p">:</span> <span class="n">Permanently</span> <span class="n">added</span> <span class="s1">&#39;[localhost]:2022&#39;</span> <span class="p">(</span><span class="n">ED25519</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">known</span> <span class="n">hosts</span><span class="o">.</span>
+<span class="hll"><span class="n">Enter</span> <span class="n">passphrase</span> <span class="k">for</span> <span class="n">key</span> <span class="s1">&#39;/Users/densuke/.ssh/id_rsa&#39;</span><span class="p">:</span>
+</span><span class="n">Welcome</span> <span class="n">to</span> <span class="n">Ubuntu</span> <span class="mf">20.04.4</span> <span class="n">LTS</span> <span class="p">(</span><span class="n">GNU</span><span class="o">/</span><span class="n">Linux</span> <span class="mf">5.4.0</span><span class="o">-</span><span class="mi">104</span><span class="o">-</span><span class="n">generic</span> <span class="n">x86_64</span><span class="p">)</span>
+
+<span class="o">*</span> <span class="n">Documentation</span><span class="p">:</span>  <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">help</span><span class="o">.</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span>
+<span class="o">*</span> <span class="n">Management</span><span class="p">:</span>     <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">landscape</span><span class="o">.</span><span class="n">canonical</span><span class="o">.</span><span class="n">com</span>
+<span class="o">*</span> <span class="n">Support</span><span class="p">:</span>        <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">advantage</span>
+<span class="n">Last</span> <span class="n">login</span><span class="p">:</span> <span class="n">Mon</span> <span class="n">Mar</span> <span class="mi">28</span> <span class="mi">05</span><span class="p">:</span><span class="mi">33</span><span class="p">:</span><span class="mi">13</span> <span class="mi">2022</span> <span class="kn">from</span> <span class="mf">10.0.2.2</span>
+</pre></div>
+</div>
+</div>
+<p>少しわかりにくいですが、秘密鍵ファイルに対するパスフレーズを求めてきています(Enter passphrase)。</p>
+</section>
+<section id="id10">
+<h2>おまけ: 秘密鍵パスフレーズの記憶<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Windows10/11では、秘密鍵のパスフレーズは通常は都度入力が必要ですが、パスフレーズを記憶して入力を簡略化できるサービスが用意されています。
+この記憶については、 <strong class="command">ssh-add</strong> コマンドを使って操作しますが、記憶先となるエージェントサービスが動いていないと話になりません。</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">ssh-agentサービスの確認</span><a class="headerlink" href="#id22" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">Get</span><span class="o">-</span><span class="n">Service</span> <span class="o">-</span><span class="n">Name</span> <span class="s2">&quot;*ssh*&quot;</span>
+
+<span class="n">Status</span>   <span class="n">Name</span>               <span class="n">DisplayName</span>
+<span class="o">------</span>   <span class="o">----</span>               <span class="o">-----------</span>
+<span class="hll"><span class="n">Stopped</span>  <span class="n">ssh</span><span class="o">-</span><span class="n">agent</span>          <span class="n">OpenSSH</span> <span class="n">Authentication</span> <span class="n">Agent</span>
+</span><span class="n">Running</span>  <span class="n">sshd</span>               <span class="n">OpenSSH</span> <span class="n">SSH</span> <span class="n">Server</span>
+</pre></div>
+</div>
+</div>
+<p>5行目に出ている &quot;ssh-agent&quot; サービス(OpenSSH Authentication Agent)がそれです。
+ただし初期状態では止まっている(Stopped)ので、有効化しておきます。</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">ssh-agentサービスの有効化(管理者ターミナル上で操作)</span><a class="headerlink" href="#id23" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># -StartupType Automatic → 起動時に自動起動</span>
+<span class="c1"># -Status Running → 状態を起動(中)にする</span>
+<span class="n">PS</span><span class="o">&gt;</span>  <span class="n">Set</span><span class="o">-</span><span class="n">Service</span> <span class="o">-</span><span class="n">Name</span> <span class="n">ssh</span><span class="o">-</span><span class="n">agent</span> <span class="o">-</span><span class="n">StartupType</span> <span class="n">Automatic</span> <span class="o">-</span><span class="n">Status</span> <span class="n">Running</span>
+</pre></div>
+</div>
+</div>
+<p>これで動き出しました。 <strong class="command">ssh-add</strong> で鍵操作をしてみます。</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-text">鍵パスフレーズの記憶</span><a class="headerlink" href="#id24" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span><span class="o">-</span><span class="n">add</span>
+<span class="n">Enter</span> <span class="n">passphrase</span> <span class="k">for</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">densuke</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span><span class="p">:</span>
+<span class="n">Identity</span> <span class="n">added</span><span class="p">:</span> <span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="n">densuke</span><span class="o">/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span> <span class="p">(</span><span class="n">densuke</span><span class="nd">@nezumi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>標準的な鍵ファイル名は検出しますが、見つけられない場合は、引数に鍵ファイルのパスを渡せば可能です。
+これでパスフレーズ入力を省略できます。</p>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">パスフレーズ省略ログイン(成功)</span><a class="headerlink" href="#id25" title="このコードへのパーマリンク">¶</a></div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">ssh</span> <span class="n">sl</span>
+<span class="ne">Warning</span><span class="p">:</span> <span class="n">Permanently</span> <span class="n">added</span> <span class="s1">&#39;[localhost]:2022&#39;</span> <span class="p">(</span><span class="n">ED25519</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">known</span> <span class="n">hosts</span><span class="o">.</span>
+<span class="n">Welcome</span> <span class="n">to</span> <span class="n">Ubuntu</span> <span class="mf">20.04.4</span> <span class="n">LTS</span> <span class="p">(</span><span class="n">GNU</span><span class="o">/</span><span class="n">Linux</span> <span class="mf">5.4.0</span><span class="o">-</span><span class="mi">104</span><span class="o">-</span><span class="n">generic</span> <span class="n">x86_64</span><span class="p">)</span>
+
+<span class="o">*</span> <span class="n">Documentation</span><span class="p">:</span>  <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">help</span><span class="o">.</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span>
+<span class="o">*</span> <span class="n">Management</span><span class="p">:</span>     <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">landscape</span><span class="o">.</span><span class="n">canonical</span><span class="o">.</span><span class="n">com</span>
+<span class="o">*</span> <span class="n">Support</span><span class="p">:</span>        <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">advantage</span>
+<span class="n">Last</span> <span class="n">login</span><span class="p">:</span> <span class="n">Mon</span> <span class="n">Mar</span> <span class="mi">28</span> <span class="mi">05</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="mi">41</span> <span class="mi">2022</span> <span class="kn">from</span> <span class="mf">10.0.2.2</span>
+</pre></div>
+</div>
+</div>
+<p>と、パスフレーズ入力を省略してのログインが可能になりました。
+これはvscodeでのリモート開発をするときなどにバックエンドでログインを自動化させるためにも使えるものとなります。</p>
+<dl class="footnote brackets">
+<dt class="label" id="pub"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p>これができてしまうと、公開鍵自身が端なり共有鍵になってしまってます。</p>
+</dd>
+<dt class="label" id="kl"><span class="brackets"><a class="fn-backref" href="#id4">2</a></span></dt>
+<dd><p>鍵長はその時により異なりますが、現状2048ビット長以上なら実用的な問題はありません。</p>
+</dd>
+<dt class="label" id="home"><span class="brackets"><a class="fn-backref" href="#id5">3</a></span></dt>
+<dd><p>敢えて書くなら <code class="code docutils literal notranslate"><span class="pre">${HOME}/.ssh</span></code> といった具合にするとなにげに動きます、 <strong class="command">ssh-keygen -f</strong> でも使えます。</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">目次</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">公開鍵ログイン</a><ul>
+<li><a class="reference internal" href="#tl-dr">TL;DR</a></li>
+<li><a class="reference internal" href="#ssh">sshの公開鍵ログインとは</a></li>
+<li><a class="reference internal" href="#id3">鍵ペアの生成</a></li>
+<li><a class="reference internal" href="#id6">鍵の登録</a><ul>
+<li><a class="reference internal" href="#id7">公開鍵の準備</a></li>
+<li><a class="reference internal" href="#id8">公開鍵の登録</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">接続の確認</a></li>
+<li><a class="reference internal" href="#id10">おまけ: 秘密鍵パスフレーズの記憶</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>前のトピックへ</h4>
+    <p class="topless"><a href="eclipse.html"
+                          title="前の章へ">カスタムEclipseの作成</a></p>
+  </div>
+  <div>
+    <h4>次のトピックへ</h4>
+    <p class="topless"><a href="winterm-ssh.html"
+                          title="次の章へ">Windows Terminalとsshの利用</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>このページ</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ssh-key.rst.txt"
+            rel="nofollow">ソースコードを表示</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="winterm-ssh.html" title="Windows Terminalとsshの利用"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="eclipse.html" title="カスタムEclipseの作成"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">公開鍵ログイン</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, SATO Daisuke &lt;densuke@st.kobedenshi.ac.jp&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
+    </div>
+  </body>
+</html>
