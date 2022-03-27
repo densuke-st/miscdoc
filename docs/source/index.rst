@@ -16,6 +16,7 @@
    winget
    java
    eclipse
+   ssh-key
    winterm-ssh
    virtualbox/index
    docker/index
