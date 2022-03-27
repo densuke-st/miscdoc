@@ -66,7 +66,7 @@ html_static_path = ['_static']
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
-    'papersize': 'a4paper',
+    'papersize': 'b5j',
 
     # The font size ('10pt', '11pt' or '12pt').
     #
@@ -100,7 +100,7 @@ latex_show_pagerefs = True
 
 # If true, show URL addresses after external links.
 #
-latex_show_urls = True
+latex_show_urls = 'footnote'
 
 # Documents to append as an appendix to all manuals.
 #
