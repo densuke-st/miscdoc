@@ -14,6 +14,7 @@
 
    winget
    java
+   ssh-key
    winterm-ssh
    docker/index
 
