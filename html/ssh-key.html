@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>公開鍵ログイン &#8212; 技術的小噺  ドキュメント</title>
+    <title>sshの公開鍵ログイン &#8212; 技術的小噺  ドキュメント</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinxdoc.css" />
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
@@ -33,7 +33,7 @@
           <a href="eclipse.html" title="カスタムEclipseの作成"
              accesskey="P">前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">公開鍵ログイン</a></li> 
+        <li class="nav-item nav-item-this"><a href="">sshの公開鍵ログイン</a></li> 
       </ul>
     </div>  
 
@@ -42,8 +42,8 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="ssh-key">
-<span id="id1"></span><h1>公開鍵ログイン<a class="headerlink" href="#ssh-key" title="このヘッドラインへのパーマリンク">¶</a></h1>
+  <section id="ssh">
+<span id="ssh-key"></span><h1>sshの公開鍵ログイン<a class="headerlink" href="#ssh" title="このヘッドラインへのパーマリンク">¶</a></h1>
 <section id="tl-dr">
 <h2>TL;DR<a class="headerlink" href="#tl-dr" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <div class="literal-block-wrapper docutils container" id="id11">
@@ -65,8 +65,8 @@ $ chmod 0600 ~/.ssh/authorized_keys
 </div>
 <p>これでWindowsのターミナル側からsshのログイン時にパスワードではなくパスフレーズ(Passphrase)を聞いてくれば成功、秘密鍵に設定したパスフレーズでログインすれば良い。</p>
 </section>
-<section id="ssh">
-<h2>sshの公開鍵ログインとは<a class="headerlink" href="#ssh" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<section id="id1">
+<h2>sshの公開鍵ログインとは<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>sshでは、ログイン時にパスワードを(暗号回線とはいえ)リモートサーバーに投げない仕組みとして、公開鍵によるログインをサポートしています。</p>
 <div class="admonition note">
 <p class="admonition-title">注釈</p>
@@ -236,6 +236,14 @@ $ exit
 <h2>おまけ: 秘密鍵パスフレーズの記憶<a class="headerlink" href="#id10" title="このヘッドラインへのパーマリンク">¶</a></h2>
 <p>Windows10/11では、秘密鍵のパスフレーズは通常は都度入力が必要ですが、パスフレーズを記憶して入力を簡略化できるサービスが用意されています。
 この記憶については、 <strong class="command">ssh-add</strong> コマンドを使って操作しますが、記憶先となるエージェントサービスが動いていないと話になりません。</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>この仕組みを使うと、作業が楽になる反面、パソコン自体がログイン情報を保有することになります。
+そのため、作業中に離席すると、他の人がリモートログインできてしまうということになります。
+離席する際には画面ロックをかける、他の人がロック解除できないように対応をするなど、
+別のレベルでのセキュリティが求められます。</p>
+<p>無操作による自動ロックなど、適切な対策を講じた上で、便利さと問題点を認識した上で使って下さい。</p>
+</div>
 <div class="literal-block-wrapper docutils container" id="id22">
 <div class="code-block-caption"><span class="caption-text">ssh-agentサービスの確認</span><a class="headerlink" href="#id22" title="このコードへのパーマリンク">¶</a></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PS</span><span class="o">&gt;</span> <span class="n">Get</span><span class="o">-</span><span class="n">Service</span> <span class="o">-</span><span class="n">Name</span> <span class="s2">&quot;*ssh*&quot;</span>
@@ -307,9 +315,9 @@ $ exit
   <div>
     <h3><a href="index.html">目次</a></h3>
     <ul>
-<li><a class="reference internal" href="#">公開鍵ログイン</a><ul>
+<li><a class="reference internal" href="#">sshの公開鍵ログイン</a><ul>
 <li><a class="reference internal" href="#tl-dr">TL;DR</a></li>
-<li><a class="reference internal" href="#ssh">sshの公開鍵ログインとは</a></li>
+<li><a class="reference internal" href="#id1">sshの公開鍵ログインとは</a></li>
 <li><a class="reference internal" href="#id3">鍵ペアの生成</a></li>
 <li><a class="reference internal" href="#id6">鍵の登録</a><ul>
 <li><a class="reference internal" href="#id7">公開鍵の準備</a></li>
@@ -367,7 +375,7 @@ $ exit
           <a href="eclipse.html" title="カスタムEclipseの作成"
              >前へ</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">技術的小噺  ドキュメント</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">公開鍵ログイン</a></li> 
+        <li class="nav-item nav-item-this"><a href="">sshの公開鍵ログイン</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
